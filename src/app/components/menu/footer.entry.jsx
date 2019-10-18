@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 
 function MenuFooterEntry({
   image: { src, alt } = { src: "#", alt: "" },
@@ -6,7 +6,7 @@ function MenuFooterEntry({
   href
 }) {
   return (
-    <div className="entry">
+    <div className="entry" ref={useRef()}>
       <div className="image-container">
         {typeof src === "string" ? (
           <img {...{ src, className: "image" }} alt={alt} />
