@@ -11,7 +11,7 @@ const mapDispatchToProps = dispatch => {
 
 function Menu({ changePath }) {
   return [
-    <MenuHeader {...{ key: "header", changePath }} />,
+    <MenuHeader {...{ key: "header", title: "GROCERIES APP", changePath }} />,
     <MenuFooter {...{ key: "footer", changePath }} />
   ];
 }
