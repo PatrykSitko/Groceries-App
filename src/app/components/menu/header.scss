@@ -1,8 +1,14 @@
 @import "../../styles.shared/colors";
 
-.menu-header {
+.menu-header,
+.menu-header-background {
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  position: fixed;
   display: flex;
   padding: 5vmin;
+  width: 100%;
   color: $menuColor;
   background-color: $menuBackgroundColor;
   .title {
@@ -15,4 +21,7 @@
   .login-button {
     min-width: max-content;
   }
+}
+.menu-header-background {
+  position: relative;
 }
