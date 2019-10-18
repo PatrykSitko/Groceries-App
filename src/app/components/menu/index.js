@@ -14,9 +14,18 @@ function Menu({ changePath }) {
   return [
     <MenuHeader {...{ key: "header", title: "GROCERIES APP", changePath }} />,
     <MenuFooter {...{ key: "footer", changePath }}>
-      <Entry title="List" image={{ src: images.menu.list, alt: "list" }} />
-      <Entry title="stats" image={{ src: images.menu.stats, alt: "stats" }} />
-      <Entry title="Recipes" image={{ src: images.menu.fork, alt: "fork" }} />
+      <Entry
+        title="List"
+        image={{ src: <images.interactive.menu.List />, alt: "list" }}
+      />
+      <Entry
+        title="stats"
+        image={{ src: <images.interactive.menu.Stats />, alt: "stats" }}
+      />
+      <Entry
+        title="Recipes"
+        image={{ src: <images.interactive.menu.Fork />, alt: "fork" }}
+      />
     </MenuFooter>
   ];
 }
