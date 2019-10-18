@@ -1,10 +1,101 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import ReactDOM from "react-dom";
 import "./footer.scss";
 
-export { default as Entry } from "./footer.entry";
+import generateKeyFromComponent from "../tools/keyGenerator";
 
-function MenuFooter({ changePath, children: entries, ...other }) {
-  return <footer {...{ className: "menu-footer", ...other }}>{entries}</footer>;
+export { default as Entry } from "./footer.entry";
+const mapStateToProps = ({
+  state: {
+    window: { inner }
+  }
+}) => {
+  return { windowInnerDimensions: inner };
+};
+function MenuFooter({
+  windowInnerDimensions,
+  changePath,
+  children: entries,
+  ...other
+}) {
+  const [entriesRects, setEntriesRects] = useState(undefined);
+  const [separatorStyle, setSeparatorStyle] = useState({});
+  useEntriesRectSetter(entriesRects, setEntriesRects);
+  useSeparatorStyleSetter(
+    entriesRects,
+    windowInnerDimensions,
+    separatorStyle,
+    setSeparatorStyle
+  );
+  return (
+    <footer {...{ id: "menu-footer", ...other }}>
+      {[entries].flat(Infinity).map((entry, index, entries) =>
+        index !== entries.length - 1
+          ? typeof entry === "object"
+            ? [
+                React.cloneElement(entry, {
+                  key: generateKeyFromComponent(entry)
+                }),
+                <div key={`separator-${index}`} style={separatorStyle} />
+              ]
+            : entry
+          : entry
+      )}
+    </footer>
+  );
+}
+//[entries].map(refs)
+function refs(entry) {
+  return Object.values(entry)[0].ref;
+}
+//[entriesRefs].map(boundingClientRect)
+function boundingClientRect(ref) {
+  return (
+    ref &&
+    ref.current &&
+    ReactDOM.findDOMNode(ref.current).getBoundingClientRect()
+  );
+}
+function useEntriesRectSetter(entriesRects, setEntriesRects) {
+  useEffect(() => {
+    const entrieElements = document
+      .getElementById("menu-footer")
+      .getElementsByClassName("entry");
+    const entriesRefs = Object.values(entrieElements).map(refs);
+    const currentEntriesRects = entriesRefs
+      .map(boundingClientRect)
+      .filter(rect => rect !== undefined);
+    if (
+      [entriesRects].flat(Infinity).join("") !==
+      [currentEntriesRects].flat(Infinity).join("")
+    ) {
+      setEntriesRects(currentEntriesRects);
+    }
+  }, [entriesRects, setEntriesRects]);
 }
 
-export default MenuFooter;
+function useSeparatorStyleSetter(
+  entriesRects,
+  windowInnerDimensions,
+  separatorStyle,
+  setSeparatorStyle
+) {
+  useEffect(() => {
+    if (entriesRects) {
+      const entriesWidth = entriesRects
+        .map(({ width }) => width)
+        .reduce((prevVal, currVal) => prevVal + currVal);
+      const currentSeparatorWidth =
+        (windowInnerDimensions.width - entriesWidth) / entriesRects.length;
+      if (
+        !separatorStyle.width ||
+        separatorStyle.width !== currentSeparatorWidth
+      ) {
+        setSeparatorStyle({ width: currentSeparatorWidth });
+      }
+    }
+    console.log(entriesRects, windowInnerDimensions.width);
+  }, [entriesRects, windowInnerDimensions, separatorStyle, setSeparatorStyle]);
+}
+export default connect(mapStateToProps)(MenuFooter);
