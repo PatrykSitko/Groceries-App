@@ -8,8 +8,13 @@ function MenuFooterEntry({
   return (
     <div className="entry">
       <div className="image-container">
-        {/* eslint-disable-next-line jsx-a11y/alt-text*/}
-        <img {...{ src, alt }} />
+        {typeof src === "string" ? (
+          <img {...{ src, className: "image" }} alt={alt} />
+        ) : typeof src === "object" ? (
+          React.cloneElement(src, { className: "image" })
+        ) : (
+          ""
+        )}
       </div>
       <p className="title">{title}</p>
     </div>
