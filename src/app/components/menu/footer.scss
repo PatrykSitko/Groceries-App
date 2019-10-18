@@ -15,8 +15,10 @@
     padding: 0 1vmin;
     .image-container {
       padding-left: calc((100% - 10vmin) / 2);
-      img {
+      .image {
         width: 8vmin;
+        height: 8vmin;
+        margin: auto;
       }
     }
     .title {
