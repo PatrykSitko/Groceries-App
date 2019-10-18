@@ -89,13 +89,12 @@ function useSeparatorStyleSetter(
       const currentSeparatorWidth =
         (windowInnerDimensions.width - entriesWidth) / entriesRects.length;
       if (
-        !separatorStyle.width ||
+        (currentSeparatorWidth && !separatorStyle.width) ||
         separatorStyle.width !== currentSeparatorWidth
       ) {
         setSeparatorStyle({ width: currentSeparatorWidth });
       }
     }
-    console.log(entriesRects, windowInnerDimensions.width);
   }, [entriesRects, windowInnerDimensions, separatorStyle, setSeparatorStyle]);
 }
 export default connect(mapStateToProps)(MenuFooter);
