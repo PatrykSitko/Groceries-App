@@ -1,0 +1,18 @@
+@import "../../styles.shared/colors";
+
+.menu-header {
+  display: flex;
+  padding: 5vmin;
+  color: $menuColor;
+  background-color: $menuBackgroundColor;
+  font-weight: bold;
+  .title {
+    min-width: max-content;
+  }
+  .separator {
+    width: 100%;
+  }
+  .login-button {
+    min-width: max-content;
+  }
+}
