@@ -10,15 +10,15 @@ const mapStateToProps = ({
   state: {
     window: { inner }
   }
-}) => {
-  return { windowInnerDimensions: inner };
-};
+}) => ({ windowInnerDimensions: inner });
+
 function MenuFooter({
   windowInnerDimensions,
   changePath,
   children: entries,
   ...other
 }) {
+  delete other.dispatch;
   const [entriesRects, setEntriesRects] = useState(undefined);
   const [separatorStyle, setSeparatorStyle] = useState({});
   useEntriesRectSetter(entriesRects, setEntriesRects);
