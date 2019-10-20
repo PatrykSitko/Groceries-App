@@ -29,20 +29,22 @@ function MenuFooter({
     setSeparatorStyle
   );
   return (
-    <footer {...{ id: "menu-footer", ...other }}>
-      {[entries].flat(Infinity).map((entry, index, entries) =>
-        index !== entries.length - 1
-          ? typeof entry === "object"
-            ? [
-                React.cloneElement(entry, {
-                  key: generateKeyFromComponent(entry)
-                }),
-                <div key={`separator-${index}`} style={separatorStyle} />
-              ]
+    <div style={{ width: "100%", position: "fixed", bottom: 0, left: 0 }}>
+      <footer {...{ id: "menu-footer", ...other }}>
+        {[entries].flat(Infinity).map((entry, index, entries) =>
+          index !== entries.length - 1
+            ? typeof entry === "object"
+              ? [
+                  React.cloneElement(entry, {
+                    key: generateKeyFromComponent(entry)
+                  }),
+                  <div key={`separator-${index}`} style={separatorStyle} />
+                ]
+              : entry
             : entry
-          : entry
-      )}
-    </footer>
+        )}
+      </footer>
+    </div>
   );
 }
 //[entries].map(refs)
@@ -87,7 +89,8 @@ function useSeparatorStyleSetter(
         .map(({ width }) => width)
         .reduce((prevVal, currVal) => prevVal + currVal);
       const currentSeparatorWidth =
-        (windowInnerDimensions.width - entriesWidth) / entriesRects.length;
+        (windowInnerDimensions.width - entriesWidth) /
+        (entriesRects.length - 1);
       if (
         (currentSeparatorWidth && !separatorStyle.width) ||
         separatorStyle.width !== currentSeparatorWidth

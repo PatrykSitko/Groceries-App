@@ -4,9 +4,6 @@
   display: flex;
   padding: 5vmin 10vmin;
   background-color: $menuBackgroundColor;
-  position: fixed;
-  left: 0;
-  bottom: 0;
   .entry {
     display: flexbox;
     color: $menuFooterEntryColor;
