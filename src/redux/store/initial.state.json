@@ -2,7 +2,7 @@
   "title": "Forever Young",
   "state": {
     "user": {
-      "gender": null
+      "language": "en"
     },
     "mouse": {
       "down": false,
@@ -16,6 +16,33 @@
     "window": {
       "inner": null,
       "outer": null
+    },
+    "routes": {
+      "keys": ["list", "graph", "recipies"],
+      "en": {
+        "login": "login",
+        "list": "list",
+        "graph": "graph",
+        "recipes": "recipes"
+      },
+      "pl": {
+        "login": "zaloguj",
+        "list": "lista",
+        "graph": "wykres",
+        "recipes": "receptury"
+      },
+      "fr": {
+        "login": "identifier",
+        "list": "liste",
+        "graph": "diagramme",
+        "recipes": "recettes"
+      },
+      "nl": {
+        "login": "inloggen",
+        "list": "lijst",
+        "graph": "diagram",
+        "recipes": "recepten"
+      }
     }
   },
   "router": {
