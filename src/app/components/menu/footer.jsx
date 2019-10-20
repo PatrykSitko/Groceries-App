@@ -49,7 +49,8 @@ function MenuFooter({
 }
 //[entries].map(refs)
 function refs(entry) {
-  return Object.values(entry)[0].ref;
+  const props = 0;
+  return Object.values(entry)[props].ref;
 }
 //[entriesRefs].map(boundingClientRect)
 function boundingClientRect(ref) {
