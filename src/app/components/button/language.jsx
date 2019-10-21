@@ -6,35 +6,39 @@ import { connect } from "react-redux";
 import LanguageButtonEntry from "./language.entry";
 
 const mapStateToProps = ({ state }) => ({
-  windowInnerDimensions: state.window.inner,
   language: state.user.language,
   languageDescriptors: state.routes["language-descriptors"]
 });
-function LanguageButton({
-  windowInnerDimensions,
-  language,
-  languageDescriptors
-}) {
+function LanguageButton({ language, languageDescriptors }) {
   const ref = useRef();
+  const [updateInterval, setUpdateInterval] = useState(undefined);
   const [isSelected, setIsSelected] = useState(false);
   const [languageSelectionStyle, setLanguageSelectionStyle] = useState(
     undefined
   );
   useEffect(() => {
-    if (ref && ref.current) {
-      const { width } = ReactDOM.findDOMNode(
-        ref.current
-      ).getBoundingClientRect();
-      if (!languageSelectionStyle || languageSelectionStyle.width !== width) {
-        setLanguageSelectionStyle({ width });
-      }
+    if (ref && ref.current && !updateInterval) {
+      setUpdateInterval(
+        setInterval(() => {
+          const { width } = ReactDOM.findDOMNode(
+            ref.current
+          ).getBoundingClientRect();
+          if (
+            !languageSelectionStyle ||
+            languageSelectionStyle.width !== width
+          ) {
+            setLanguageSelectionStyle({ width });
+          }
+        }, 100)
+      );
     }
   }, [
     ref,
     languageSelectionStyle,
     setLanguageSelectionStyle,
-    windowInnerDimensions,
-    language
+    language,
+    updateInterval,
+    setUpdateInterval
   ]);
   return [
     <div
