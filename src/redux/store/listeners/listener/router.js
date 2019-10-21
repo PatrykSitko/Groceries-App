@@ -11,35 +11,44 @@ export default ({ dispatch, getState }) => {
       state,
       router: { pathname }
     } = getState();
-    const {
+    let {
       user: { language },
       routes
     } = state;
     const requestedLanguage = pathname.split("/").filter(invalid)[LANGUAGE];
     if (!language.includes(requestedLanguage)) {
-      languageUpdated = true;
-      dispatch(setLanguage({ state, language: requestedLanguage }));
+      languageUpdated = match(
+        requestedLanguage,
+        routes["language-descriptors"]
+      );
+      dispatch(
+        setLanguage({
+          state,
+          language: languageUpdated
+        })
+      );
     }
-    if (!languageUpdated) {
-      const requestedPath = pathname.split("/").filter(invalid)[PATH];
-      if (requestedPath) {
-        const availableRoutes = routes[language];
-        const currentPath = Object.values(availableRoutes)[
-          findCurrentPathIndex(requestedPath, routes, language)
-        ];
-        const suggestedPathname = `/${language}/${currentPath}`;
-        if (!pathname.includes(suggestedPathname)) {
-          const timeout = setTimeout(() => {
-            dispatch(push(`${suggestedPathname}`));
-            clearTimeout(timeout);
-          }, 1300);
-        }
-      } else {
+    if (languageUpdated) {
+      language = languageUpdated;
+    }
+    const requestedPath = pathname.split("/").filter(invalid)[PATH];
+    if (requestedPath) {
+      const availableRoutes = routes[language];
+      const currentPath = Object.values(availableRoutes)[
+        findCurrentPathIndex(requestedPath, routes, language)
+      ];
+      const suggestedPathname = `/${language}/${currentPath}`;
+      if (!pathname.includes(suggestedPathname)) {
         const timeout = setTimeout(() => {
-          dispatch(push(`/${language}/${routes[language].list}`));
+          dispatch(push(`${suggestedPathname}`));
           clearTimeout(timeout);
         }, 1300);
       }
+    } else {
+      const timeout = setTimeout(() => {
+        dispatch(push(`/${language}/${routes[language].list}`));
+        clearTimeout(timeout);
+      }, 1300);
     }
   }, 100);
 };
@@ -48,6 +57,26 @@ export default ({ dispatch, getState }) => {
 function invalid(entry) {
   return typeof entry === "string" && entry !== "";
 }
+
+function match(requestedLanguage, languageDescriptors) {
+  let currentLanguage = "en";
+  let highestMatches = 0;
+  for (let language in languageDescriptors) {
+    const languageDescriptorSylabs = languageDescriptors[language].split("");
+    let matches = 0;
+    for (let sylab of languageDescriptorSylabs) {
+      if (requestedLanguage.includes(sylab)) {
+        ++matches;
+      }
+    }
+    if (matches >= highestMatches) {
+      highestMatches = matches;
+      currentLanguage = language;
+    }
+  }
+  return currentLanguage;
+}
+
 function findCurrentPathIndex(path, routes, language) {
   let currentPathIndex = undefined;
   for (let language in routes) {

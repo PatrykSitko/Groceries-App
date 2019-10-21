@@ -27,6 +27,12 @@
     "routes": {
       "keys": ["list", "graph", "recipies"],
       "supported-languages": ["pl", "en", "fr", "nl"],
+      "language-descriptors": {
+        "pl": "polski polish pools polonais",
+        "en": "english angielski anglais engels",
+        "fr": "francais francuski french frans",
+        "nl": "nederlands dutch niderlandski néerlandais"
+      },
       "en": {
         "list": "list",
         "graph": "graph",
