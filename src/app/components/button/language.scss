@@ -20,5 +20,15 @@
 
 #language-button:hover {
   color: $languageButtonHoverColor;
-  background-color: $languageButtonBackgroundHoverColor;
+  background-color: $languageButtonHoverBackgroundColor;
+}
+
+#language-button.selected {
+  color: $languageButtonSelectedColor;
+  background-color: $languageButtonSelectedBackgroundColor;
+}
+
+#language-button.selected:hover {
+  color: $languageButtonSelectedHoverColor;
+  background-color: $languageButtonSelectedHoverBackgroundColor;
 }
