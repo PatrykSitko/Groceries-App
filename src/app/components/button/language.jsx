@@ -33,7 +33,8 @@ function LanguageButton({
     ref,
     languageSelectionStyle,
     setLanguageSelectionStyle,
-    windowInnerDimensions
+    windowInnerDimensions,
+    language
   ]);
   return [
     <div
