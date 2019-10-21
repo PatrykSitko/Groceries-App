@@ -1,19 +1,21 @@
-import SET_LANGUAGE from "../../types";
+// import SET_LANGUAGE from "../../types"; not working with (required) const string 🤪
 
-export default (
-  store = { user: { language: "en" }, routes: { "supported-languages": [] } },
+export default ({
+  state: { user, routes } = {
+    user: { language: "en" },
+    routes: { "supported-languages": [] }
+  },
   language
-) => ({
-  type: SET_LANGUAGE,
+}) => ({
+  type: "SET_LANGUAGE",
   payload: {
-    ...store.user,
-    language:
-      typeof language === "string"
-        ? checkIfLanguageIsSupported(
-            store.routes["supported-languages"],
-            language
-          )
-        : "en"
+    user: {
+      ...user,
+      language: checkIfLanguageIsSupported(
+        routes["supported-languages"],
+        language
+      )
+    }
   }
 });
 
