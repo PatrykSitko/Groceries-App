@@ -79,6 +79,12 @@ function match(requestedLanguage, languageDescriptors) {
   let highestMatches = 0;
   for (let language in languageDescriptors) {
     const languageDescriptorSylabs = languageDescriptors[language].split("");
+    if (
+      !requestedLanguage ||
+      typeof requestedLanguage.toLowerCase !== "function"
+    ) {
+      continue;
+    }
     let matches = 0;
     for (let sylab of languageDescriptorSylabs) {
       if (requestedLanguage.toLowerCase().includes(sylab)) {
