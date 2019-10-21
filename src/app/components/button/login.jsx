@@ -10,6 +10,7 @@ const mapStateToProps = ({
 }) => ({ language });
 
 function LoginButton({ language, className, ...other }) {
+  delete other.dispatch;
   return (
     <div
       {...{
