@@ -29,7 +29,7 @@
   color: $languageButtonSelectedColor;
   background-color: $languageButtonSelectedBackgroundColor;
   border-radius: 0;
-  border-bottom: 0.1vmin solid $languageButtonSectionBorderColor;
+  border: 0.1vmin solid $languageButtonSectionBorderColor;
 }
 
 #language-button.selected:hover {
@@ -58,6 +58,7 @@
   }
   .entry:hover {
     color: $languageButtonSectionHoverColor;
+    border: 0.1vmin solid $languageButtonSectionBorderColor;
     background-color: $languageButtonSectionHoverBackgroundColor;
   }
   transform: scaleY(height);
