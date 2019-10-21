@@ -2,6 +2,7 @@
 
 .menu-header,
 .menu-header-background {
+  user-select: none;
   box-sizing: border-box;
   top: 0;
   left: 0;
@@ -15,6 +16,10 @@
   .title {
     min-width: max-content;
     font-weight: bold;
+  }
+  img {
+    margin-left: 1vmin;
+    height: 4vmin;
   }
   .separator {
     width: 100%;

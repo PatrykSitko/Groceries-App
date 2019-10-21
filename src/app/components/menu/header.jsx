@@ -2,7 +2,12 @@ import React from "react";
 import "./header.scss";
 import LoginButton from "../button/login";
 
-function MenuHeader({ title, changePath, ...other }) {
+function MenuHeader({
+  title,
+  image: { src, alt } = { src: "#", alt: "" },
+  changePath,
+  ...other
+}) {
   return [
     <header
       {...{
@@ -14,6 +19,8 @@ function MenuHeader({ title, changePath, ...other }) {
     </header>,
     <header {...{ key: "menu-header", className: "menu-header", ...other }}>
       <div className="title">{title}</div>
+      {/* eslint-disable-next-line jsx-a11y/alt-text*/}
+      <img {...{ src, alt }} />
       <div className="separator" />
       <LoginButton />
     </header>
