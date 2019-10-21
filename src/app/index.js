@@ -3,10 +3,11 @@ import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import "./app.scss";
 
-import Home from "./routes/home";
 import ListRoute from "./routes/list";
 import GraphRoute from "./routes/graph";
 import RecipesRoute from "./routes/recipes";
+
+import SplashScreen from "./components/screen/splash";
 
 document.title = "react app";
 
@@ -21,7 +22,7 @@ const mapStateToProps = ({ state: { routes } }) => ({ routes });
 export const Routes = connect(mapStateToProps)(({ routes }) => (
   <Switch>
     {Object.entries(routes).map(route(routes["supported-languages"]))}
-    <Route path="/" exact strict component={Home} />
+    <Route path="/" component={SplashScreen} />
   </Switch>
 ));
 
