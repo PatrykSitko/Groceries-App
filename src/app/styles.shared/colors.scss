@@ -12,10 +12,15 @@ $splashGreetingBorderColor: #d3d3d3;
 // language button colors:
 $languageButtonColor: #f4f2ea;
 $languageButtonHoverColor: #d3d3d3;
-$languageButtonBackgroundColor: #d3d3d3;
+$languageButtonBackgroundColor: #c9c9c9;
 $languageButtonHoverBackgroundColor: #f4f2ea;
 $languageButtonBorderColor: #d3d3d3;
 $languageButtonSelectedColor: $languageButtonColor;
 $languageButtonSelectedBackgroundColor: black;
 $languageButtonSelectedHoverColor: $languageButtonColor + 99;
 $languageButtonSelectedHoverBackgroundColor: $languageButtonBackgroundColor;
+$languageButtonSectionColor: $languageButtonSelectedHoverColor;
+$languageButtonSectionBackgroundColor: $languageButtonSelectedHoverBackgroundColor;
+$languageButtonSectionBorderColor: white;
+$languageButtonSectionHoverColor: $languageButtonSelectedColor;
+$languageButtonSectionHoverBackgroundColor: $languageButtonSelectedBackgroundColor;
