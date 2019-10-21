@@ -1,7 +1,14 @@
 {
   "title": "Forever Young",
   "state": {
+    "greeting": {
+      "en": "Welcome",
+      "pl": "Witaj",
+      "fr": "Bonjour",
+      "nl": "Welkom"
+    },
     "user": {
+      "name": null,
       "language": "en"
     },
     "mouse": {
