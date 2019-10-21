@@ -16,7 +16,12 @@ const mapStateToProps = ({
 const mapDispatchToProps = dispatch => ({
   changePath: path => dispatch(push(path))
 });
-
+const appTitle = {
+  pl: "APP SPOŻYWCZA",
+  en: "GROCERIES APP",
+  nl: "BOODSCHAPPEN APP",
+  fr: "APP DE COURSES"
+};
 function Menu({ routes, language, router, changePath }) {
   const path = {
     list: `/${language}/${routes[language].list}`,
@@ -27,7 +32,7 @@ function Menu({ routes, language, router, changePath }) {
     <MenuHeader
       {...{
         key: "header",
-        title: "GROCERIES APP",
+        title: appTitle[language],
         image: { src: images.menu.grocery, alt: "grocery" },
         changePath
       }}
