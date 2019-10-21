@@ -19,6 +19,7 @@
     },
     "routes": {
       "keys": ["list", "graph", "recipies"],
+      "supported-languages": ["pl", "en", "fr", "nl"],
       "en": {
         "login": "login",
         "list": "list",
