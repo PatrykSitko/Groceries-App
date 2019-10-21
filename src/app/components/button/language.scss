@@ -1,0 +1,24 @@
+@import "../../styles.shared/colors";
+
+#language-button {
+  z-index: 1;
+  top: 0.5vmin;
+  right: 0.5vmin;
+  position: fixed;
+  cursor: pointer;
+  padding: 0.5vmin;
+  font-size: 3vmin;
+  user-select: none;
+  width: max-content;
+  border-radius: 3vmin;
+  color: $languageButtonColor;
+  background-color: $languageButtonBackgroundColor;
+  border: 0.1vmin solid $languageButtonBorderColor;
+  transition-property: color background-color;
+  transition-duration: 0.3s;
+}
+
+#language-button:hover {
+  color: $languageButtonHoverColor;
+  background-color: $languageButtonBackgroundHoverColor;
+}
