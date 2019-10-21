@@ -1,6 +1,8 @@
 import { setLanguage } from "../../../actions/all";
 import { push } from "redux-first-routing";
 
+const TIMEOUT_TIME = 1300;
+
 const LANGUAGE = 0;
 const PATH = 1;
 
@@ -15,6 +17,20 @@ export default ({ dispatch, getState }) => {
       user: { language },
       routes
     } = state;
+    const currentPathname = pathname.split("/").filter(invalid);
+    if (currentPathname.length > 2) {
+      const timeout = setTimeout(() => {
+        dispatch(
+          push(
+            `/${
+              currentPathname[LANGUAGE] ? `${currentPathname[LANGUAGE]}` : ""
+            }/${currentPathname[PATH]}`
+          )
+        );
+        clearTimeout(timeout);
+      }, TIMEOUT_TIME);
+      return;
+    }
     const requestedLanguage = pathname.split("/").filter(invalid)[LANGUAGE];
     if (!language.includes(requestedLanguage)) {
       languageUpdated = match(
@@ -42,13 +58,13 @@ export default ({ dispatch, getState }) => {
         const timeout = setTimeout(() => {
           dispatch(push(`${suggestedPathname}`));
           clearTimeout(timeout);
-        }, 1300);
+        }, TIMEOUT_TIME);
       }
     } else {
       const timeout = setTimeout(() => {
         dispatch(push(`/${language}/${routes[language].list}`));
         clearTimeout(timeout);
-      }, 1300);
+      }, TIMEOUT_TIME);
     }
   }, 100);
 };
@@ -65,7 +81,7 @@ function match(requestedLanguage, languageDescriptors) {
     const languageDescriptorSylabs = languageDescriptors[language].split("");
     let matches = 0;
     for (let sylab of languageDescriptorSylabs) {
-      if (requestedLanguage.includes(sylab)) {
+      if (requestedLanguage.toLowerCase().includes(sylab)) {
         ++matches;
       }
     }
