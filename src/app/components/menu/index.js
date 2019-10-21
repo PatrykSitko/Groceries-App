@@ -34,7 +34,7 @@ function Menu({ routes, language, router, changePath }) {
     />,
     <MenuFooter {...{ key: "footer", changePath }}>
       <Entry
-        title="List"
+        title={routes[language].list}
         image={{
           src: <images.interactive.menu.List />,
           alt: "list"
@@ -43,7 +43,7 @@ function Menu({ routes, language, router, changePath }) {
         href={path.list}
       />
       <Entry
-        title="stats"
+        title={routes[language].graph}
         image={{
           src: <images.interactive.menu.Stats />,
           alt: "stats"
@@ -52,7 +52,7 @@ function Menu({ routes, language, router, changePath }) {
         href={path.graph}
       />
       <Entry
-        title="Recipes"
+        title={routes[language].recipes}
         image={{
           src: <images.interactive.menu.Fork />,
           alt: "fork"
