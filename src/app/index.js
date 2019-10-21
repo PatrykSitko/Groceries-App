@@ -20,7 +20,7 @@ const mapStateToProps = ({ state: { routes } }) => ({ routes });
 
 export const Routes = connect(mapStateToProps)(({ routes }) => (
   <Switch>
-    {Object.entries(routes).map(route)}
+    {Object.entries(routes).map(route(routes["supported-languages"]))}
     <Route path="/" exact strict component={Home} />
   </Switch>
 ));
@@ -29,13 +29,17 @@ export const Routes = connect(mapStateToProps)(({ routes }) => (
  * @param {[language:string,routes:Object]}
  * @returns {[Route]}
  */
-function route([language, routes]) {
-  return Object.entries(routes).map(([key, route]) => (
-    <Route
-      path={`/${language}/${route}`}
-      exact
-      strict
-      component={routesComponents[key]}
-    />
-  ));
+function route(supportedLanguages) {
+  return ([language, routes]) => {
+    return Object.values(supportedLanguages).includes(language)
+      ? Object.entries(routes).map(([key, route]) => (
+          <Route
+            path={`/${language}/${route}`}
+            exact
+            strict
+            component={routesComponents[key]}
+          />
+        ))
+      : undefined;
+  };
 }
