@@ -1,6 +1,8 @@
 import React from "react";
 import "./header.scss";
+
 import LoginButton from "../button/login";
+import LanguageButton from "../button/language";
 
 function MenuHeader({
   title,
@@ -23,6 +25,7 @@ function MenuHeader({
       <img {...{ src, alt }} />
       <div className="separator" />
       <LoginButton />
+      <LanguageButton />
     </header>
   ];
 }
