@@ -1,18 +1,44 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import ReactDOM from "react-dom";
 import "./language.scss";
 
 import { connect } from "react-redux";
-import { setLanguage } from "../../../redux/actions/all";
+import LanguageButtonEntry from "./language.entry";
 
 const mapStateToProps = ({ state }) => ({
-  state,
-  language: state.user.language
+  windowInnerDimensions: state.window.inner,
+  language: state.user.language,
+  languageDescriptors: state.routes["language-descriptors"]
 });
-function LanguageButton({ state, language, setLanguage }) {
+function LanguageButton({
+  windowInnerDimensions,
+  language,
+  languageDescriptors
+}) {
+  const ref = useRef();
   const [isSelected, setIsSelected] = useState(false);
+  const [languageSelectionStyle, setLanguageSelectionStyle] = useState(
+    undefined
+  );
+  useEffect(() => {
+    if (ref && ref.current) {
+      const { width } = ReactDOM.findDOMNode(
+        ref.current
+      ).getBoundingClientRect();
+      if (!languageSelectionStyle || languageSelectionStyle.width !== width) {
+        setLanguageSelectionStyle({ width });
+      }
+    }
+  }, [
+    ref,
+    languageSelectionStyle,
+    setLanguageSelectionStyle,
+    windowInnerDimensions
+  ]);
   return [
     <div
       {...{
+        ref,
         id: "language-button",
         className: isSelected ? "selected" : undefined,
         key: "language-button",
@@ -20,6 +46,23 @@ function LanguageButton({ state, language, setLanguage }) {
       }}
     >
       {language.toUpperCase()}
+    </div>,
+    <div
+      {...{
+        id: "language-selection",
+        key: "language-selection",
+        className: isSelected ? undefined : "hidden",
+        style: languageSelectionStyle
+      }}
+    >
+      {Object.keys(languageDescriptors).map(entry => (
+        <LanguageButtonEntry
+          key={entry}
+          title={entry}
+          isCurrent={entry === language}
+          onClick={() => setIsSelected(false)}
+        />
+      ))}
     </div>
   ];
 }

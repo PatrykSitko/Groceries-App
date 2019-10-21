@@ -2,19 +2,21 @@
 
 #language-button {
   z-index: 1;
-  top: 0.5vmin;
+  top: 0;
   right: 0.5vmin;
   position: fixed;
   cursor: pointer;
-  padding: 0.5vmin;
+  padding: 1vmin 0.5vmin;
   font-size: 3vmin;
   user-select: none;
   width: max-content;
   border-radius: 3vmin;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
   color: $languageButtonColor;
   background-color: $languageButtonBackgroundColor;
   border: 0.1vmin solid $languageButtonBorderColor;
-  transition-property: color background-color;
+  transition-property: color background-color border-radius;
   transition-duration: 0.3s;
 }
 
@@ -26,9 +28,43 @@
 #language-button.selected {
   color: $languageButtonSelectedColor;
   background-color: $languageButtonSelectedBackgroundColor;
+  border-radius: 0;
+  border-bottom: 0.1vmin solid $languageButtonSectionBorderColor;
 }
 
 #language-button.selected:hover {
   color: $languageButtonSelectedHoverColor;
   background-color: $languageButtonSelectedHoverBackgroundColor;
+}
+
+#language-selection,
+#language-selection.hidden {
+  position: fixed;
+  top: 0.5vmin;
+  right: 0.5vmin;
+  padding-top: 5vmin;
+  border-radius: 3vmin;
+  overflow: hidden;
+  .entry {
+    cursor: pointer;
+    text-align: center;
+    padding-bottom: 0.5vmin;
+    color: $languageButtonSectionColor;
+    background-color: $languageButtonSectionBackgroundColor;
+    border-top: 0.1vmin solid $languageButtonSectionBorderColor;
+    border-bottom: 0.1vmin solid $languageButtonSectionBorderColor;
+    transition-property: color background-color;
+    transition-duration: 0.3s;
+  }
+  .entry:hover {
+    color: $languageButtonSectionHoverColor;
+    background-color: $languageButtonSectionHoverBackgroundColor;
+  }
+  transform: scaleY(height);
+  transform-origin: top;
+  transition: transform 0.3s ease-in-out;
+}
+
+#language-selection.hidden {
+  transform: scaleY(0);
 }
