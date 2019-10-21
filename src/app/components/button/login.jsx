@@ -1,7 +1,15 @@
 import React from "react";
 import "./login.scss";
 
-function LoginButton({ className, ...other }) {
+import { connect } from "react-redux";
+
+const mapStateToProps = ({
+  state: {
+    user: { language }
+  }
+}) => ({ language });
+
+function LoginButton({ language, className, ...other }) {
   return (
     <div
       {...{
@@ -11,9 +19,21 @@ function LoginButton({ className, ...other }) {
         ...other
       }}
     >
-      Login
+      {(() => {
+        switch (language) {
+          default:
+          case "en":
+            return "Login";
+          case "pl":
+            return "Zaloguj";
+          case "fr":
+            return "S'identifier";
+          case "nl":
+            return "Log in";
+        }
+      })()}
     </div>
   );
 }
 
-export default LoginButton;
+export default connect(mapStateToProps)(LoginButton);
