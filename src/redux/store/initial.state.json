@@ -28,25 +28,21 @@
       "keys": ["list", "graph", "recipies"],
       "supported-languages": ["pl", "en", "fr", "nl"],
       "en": {
-        "login": "login",
         "list": "list",
         "graph": "graph",
         "recipes": "recipes"
       },
       "pl": {
-        "login": "zaloguj",
         "list": "lista",
         "graph": "wykres",
         "recipes": "receptury"
       },
       "fr": {
-        "login": "identifier",
         "list": "liste",
         "graph": "diagramme",
         "recipes": "recettes"
       },
       "nl": {
-        "login": "inloggen",
         "list": "lijst",
         "graph": "diagram",
         "recipes": "recepten"
