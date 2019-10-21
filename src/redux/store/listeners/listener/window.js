@@ -1,4 +1,4 @@
-import action from "../../../actions/all";
+import * as action from "../../../actions/all";
 
 export default store => {
   trackWindowSizeState(store);
