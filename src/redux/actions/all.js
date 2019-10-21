@@ -1,19 +1,9 @@
-import windowResized from "./window/resize";
-import mousedown from "./mouse/down";
-import mouseclick from "./mouse/click";
-import mouseup from "./mouse/up";
-import mousemove from "./mouse/move";
-import mouseover from "./mouse/over";
-import mouseout from "./mouse/out";
-import mousewheel from "./mouse/wheel";
-
-export default {
-  windowResized,
-  mousedown,
-  mouseclick,
-  mouseup,
-  mousemove,
-  mouseover,
-  mouseout,
-  mousewheel
-};
+export { default as windowResized } from "./window/resize";
+export { default as mousedown } from "./mouse/down";
+export { default as mouseclick } from "./mouse/click";
+export { default as mouseup } from "./mouse/up";
+export { default as mousemove } from "./mouse/move";
+export { default as mouseover } from "./mouse/over";
+export { default as mouseout } from "./mouse/out";
+export { default as mousewheel } from "./mouse/wheel";
+export { default as setLanguage } from "./set/user/language";
