@@ -6,6 +6,7 @@
   width: 14vmin;
   height: 16vmin;
   border: 0.35vmin solid $toggleButtonBorderColor;
+  cursor: pointer;
 }
 .toggle-button::before {
   position: absolute;
