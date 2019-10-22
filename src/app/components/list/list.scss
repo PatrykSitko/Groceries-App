@@ -1,0 +1,29 @@
+@import "../../styles.shared/colors";
+
+.list {
+  margin: 10vmin;
+  width: calc(100% - 20vmin);
+  min-height: 15vmin;
+  display: flex;
+  .toggle-button {
+    border-top-right-radius: 0.9vmin;
+    border-bottom-right-radius: 0.9vmin;
+  }
+  .add-button {
+    margin: 5vmin 7vmin;
+    margin-right: 0;
+  }
+  .selected-entry {
+    text-align: center;
+    font-size: 5vmin;
+    line-height: 15vmin;
+    margin-left: 3.5vmin;
+    width: calc(100% - 31.5vmin);
+    height: 16vmin;
+    border-top-left-radius: 0.9vmin;
+    border-bottom-left-radius: 0.9vmin;
+    background-color: white;
+    border: 0.35vmin solid $toggleButtonBorderColor;
+    border-right: 0 solid #00000000;
+  }
+}
