@@ -1,6 +1,41 @@
 {
   "title": "Forever Young",
   "state": {
+    "food": {
+      "selected-category-key": "0x000000",
+      "selected-entries": [],
+      "categories": [
+        {
+          "title": {
+            "en": "Christmas dinner",
+            "pl": "Obiad świąteczny",
+            "fr": "Dîner de Noël",
+            "nl": "Kerstdiner"
+          },
+          "key": "0x000000"
+        }
+      ],
+      "entries": [
+        {
+          "categoryKeys": ["0x000000"],
+          "title": {
+            "en": "Bread",
+            "pl": "Chleb",
+            "fr": "Pain",
+            "nl": "Brood"
+          }
+        },
+        {
+          "categoryKeys": ["0x000000"],
+          "title": {
+            "en": "Chicken",
+            "pl": "Kurczak",
+            "fr": "Poulet",
+            "nl": "Kip"
+          }
+        }
+      ]
+    },
     "greeting": {
       "en": "Welcome",
       "pl": "Witaj",
