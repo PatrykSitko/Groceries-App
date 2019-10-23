@@ -7,3 +7,6 @@ export { default as mouseover } from "./mouse/over";
 export { default as mouseout } from "./mouse/out";
 export { default as mousewheel } from "./mouse/wheel";
 export { default as setLanguage } from "./set/user/language";
+export {
+  default as setSelectedFoodCategoryKey
+} from "./set/food/selectedCategoryKey";
