@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import "./list.scss";
 
 import ToggleButton from "../button/toggle";
@@ -6,7 +7,13 @@ import AddButton from "../button/add";
 
 export { default as Category } from "./category";
 
+const mapStateToProps = ({
+  state: {
+    window: { inner }
+  }
+}) => ({ windowInnerDimensions: inner });
 function List({
+  windowInnerDimensions,
   initiallySelectedCategoryKey,
   getSelected: setSelected,
   children: categories,
@@ -23,7 +30,10 @@ function List({
     <div className="list" {...other}>
       {React.cloneElement(selectedCategory, {
         className: `selected-category${
-          selectedCategory.props.title.length > 20 ? " overflow" : ""
+          selectedCategory.props.title.length > 20 &&
+          windowInnerDimensions.width <= 1003
+            ? " overflow"
+            : ""
         }`
       })}
       <ToggleButton getToggledState={setIsToggled} />
@@ -48,4 +58,4 @@ function List({
   );
 }
 
-export default List;
+export default connect(mapStateToProps)(List);
