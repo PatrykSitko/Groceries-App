@@ -15,7 +15,7 @@ const mapStateToProps = ({
 function List({
   windowInnerDimensions,
   initiallySelectedCategoryKey,
-  getSelected: setSelected,
+  getSelectedCategoryKey: setSelected,
   children: categories,
   ...other
 }) {
