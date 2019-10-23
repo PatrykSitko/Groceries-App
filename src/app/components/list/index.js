@@ -23,7 +23,8 @@ function List({
   const [selectedCategoryID, setSelectedCategoryID] = useState(
     initiallySelectedCategoryKey
   );
-  const [isToggled, setIsToggled] = useState(false);
+  const toggleButtonState = useState(false);
+  const [isToggled, setIsToggled] = toggleButtonState;
   const selectedCategory = categories.filter(
     ({ props: { id } }) => id === selectedCategoryID
   )[0];
@@ -37,7 +38,7 @@ function List({
             : ""
         }`
       })}
-      <ToggleButton getToggledState={setIsToggled} />
+      <ToggleButton useState={toggleButtonState} />
       <AddButton />
       <div className={`categories${isToggled ? "" : " hidden"}`}>
         {categories
@@ -51,6 +52,7 @@ function List({
                   setSelected(key);
                 }
                 setSelectedCategoryID(key);
+                setIsToggled(!isToggled);
               }
             });
           })}
