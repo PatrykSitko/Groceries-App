@@ -17,8 +17,9 @@
   .category {
     font-size: 4.3vmin;
     padding: 3vmin;
-    color: #cecece;
-    border-bottom: 0.35vmin solid $toggleButtonBorderColor;
+    color: $listCategoryColor;
+    background-color: white;
+    border-bottom: 0.35vmin solid $listCategoryBorderColor;
     cursor: pointer;
   }
 
@@ -36,7 +37,7 @@
     border-top-left-radius: 0.9vmin;
     border-bottom-left-radius: 0.9vmin;
     background-color: white;
-    border: 0.35vmin solid $toggleButtonBorderColor;
+    border: 0.35vmin solid $listCategoryBorderColor;
     border-right: 0 solid #00000000;
   }
   .overflow {
@@ -48,7 +49,7 @@
   .categories {
     margin-top: 16.7vmin;
     margin-left: 3.5vmin;
-    border: 0.35vmin solid $toggleButtonBorderColor;
+    border: 0.35vmin solid $listCategoryBorderColor;
     border-bottom: 0 solid #00000000;
     border-radius: 0.9vmin;
     position: fixed;
