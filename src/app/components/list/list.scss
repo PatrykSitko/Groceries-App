@@ -24,18 +24,24 @@
 
   .selected-category {
     padding: 0;
-    padding-top: 2vmin;
     text-align: center;
     font-size: 5vmin;
+    line-height: 15vmin;
     margin-left: 3.5vmin;
     width: calc(100% - 31.5vmin);
-    height: 14vmin;
+    height: 16vmin;
     border-top-left-radius: 0.9vmin;
     border-bottom-left-radius: 0.9vmin;
     background-color: white;
     border: 0.35vmin solid $toggleButtonBorderColor;
     border-right: 0 solid #00000000;
   }
+  .overflow {
+    line-height: normal;
+    padding-top: 2vmin;
+    height: 14vmin;
+  }
+
   .categories {
     margin-top: 16.7vmin;
     margin-left: 3.5vmin;

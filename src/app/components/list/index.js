@@ -16,12 +16,16 @@ function List({
     initiallySelectedCategoryKey
   );
   const [isToggled, setIsToggled] = useState(false);
+  const selectedCategory = categories.filter(
+    ({ props: { id } }) => id === selectedCategoryID
+  )[0];
   return (
     <div className="list" {...other}>
-      {React.cloneElement(
-        categories.filter(({ props: { id } }) => id === selectedCategoryID)[0],
-        { className: "selected-category" }
-      )}
+      {React.cloneElement(selectedCategory, {
+        className: `selected-category${
+          selectedCategory.props.title.length > 20 ? " overflow" : ""
+        }`
+      })}
       <ToggleButton getToggledState={setIsToggled} />
       <AddButton />
       <div className={`categories${isToggled ? "" : " hidden"}`}>
