@@ -1,13 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./toggle.scss";
 
-function ToggleButton({ getToggledState, className, onClick, ...other }) {
-  const [toggled, setToggled] = useState(false);
-  useEffect(
-    () =>
-      typeof getToggledState === "function" ? getToggledState(toggled) : "",
-    [getToggledState, toggled]
-  );
+function ToggleButton({ useState, className, onClick, ...other }) {
+  const [toggled, setToggled] = useState;
   return (
     <div
       className={`toggle-button${toggled ? " toggled" : ""}${
