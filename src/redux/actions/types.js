@@ -7,6 +7,7 @@ export const MOUSE_OVER = "MOUSE_OVER";
 export const MOUSE_OUT = "MOUSE_OUT";
 export const MOUSE_WHEEL = "MOUSE_WHEEL";
 export const SET_LANGUAGE = "SET_LANGUAGE";
+export const SET_SELECTED_FOOD_CATEGORY_KEY = "SET_SELECTED_FOOD_CATEGORY_KEY";
 
 export default [
   WINDOW_RESIZED,
@@ -17,5 +18,6 @@ export default [
   MOUSE_OVER,
   MOUSE_OUT,
   MOUSE_WHEEL,
-  SET_LANGUAGE
+  SET_LANGUAGE,
+  SET_SELECTED_FOOD_CATEGORY_KEY
 ];
