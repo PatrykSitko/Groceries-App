@@ -13,6 +13,15 @@
             "nl": "Kerstdiner"
           },
           "key": "0x000000"
+        },
+        {
+          "title": {
+            "en": "Lunch food",
+            "pl": "Posiłek śniadaniowy",
+            "fr": "Nourriture de déjeuner",
+            "nl": "Lunch eten"
+          },
+          "key": "0x000001"
         }
       ],
       "entries": [
