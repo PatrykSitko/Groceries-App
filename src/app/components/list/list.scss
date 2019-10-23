@@ -29,6 +29,8 @@
     line-height: 15vmin;
     margin-left: 3.5vmin;
     width: calc(100% - 31.5vmin);
+    max-width: width;
+    overflow: auto;
     height: 16vmin;
     border-top-left-radius: 0.9vmin;
     border-bottom-left-radius: 0.9vmin;
