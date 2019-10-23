@@ -19,6 +19,7 @@ function List({
   children: categories,
   ...other
 }) {
+  delete other.dispatch;
   const [selectedCategoryID, setSelectedCategoryID] = useState(
     initiallySelectedCategoryKey
   );
