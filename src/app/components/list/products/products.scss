@@ -12,5 +12,10 @@
     color: gray;
     border: 0.35vmin dashed black;
     border-image: url(../../../resources/images/border/dashed.png) 1 round;
+    transition: border-image 0.3s;
+  }
+  .add-product:hover {
+    border: 0.35vmin dashed black;
+    border-image: url(../../../resources/images/border/dashed-black.png) 1 round;
   }
 }
