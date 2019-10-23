@@ -1,0 +1,16 @@
+.product-list {
+  margin: 0 10vmin;
+  width: calc(100% - 20vmin);
+
+  .add-product {
+    text-align: center;
+    margin-top: 7vmin;
+    width: 100%;
+    padding-top: 3.7vmin;
+    font-size: 4.5vmin;
+    height: 9.3vmin;
+    color: gray;
+    border: 0.35vmin dashed black;
+    border-image: url(../../../resources/images/border/dashed.png) 1 round;
+  }
+}
