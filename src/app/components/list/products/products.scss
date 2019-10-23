@@ -15,6 +15,7 @@
     transition: border-image 0.3s;
   }
   .add-product:hover {
+    transition: border-image 0.7s;
     border: 0.35vmin dashed black;
     border-image: url(../../../resources/images/border/dashed-black.png) 1 round;
   }
