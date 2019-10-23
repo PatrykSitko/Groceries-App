@@ -7,6 +7,15 @@
       "categories": [
         {
           "title": {
+            "en": "All",
+            "pl": "Wszystko",
+            "fr": "Tout",
+            "nl": "Alles"
+          },
+          "key": "global"
+        },
+        {
+          "title": {
             "en": "Christmas dinner",
             "pl": "Obiad świąteczny",
             "fr": "Dîner de Noël",
@@ -26,7 +35,7 @@
       ],
       "entries": [
         {
-          "categoryKeys": ["0x000000"],
+          "categoryKeys": ["global", "0x000000"],
           "title": {
             "en": "Bread",
             "pl": "Chleb",
@@ -35,7 +44,7 @@
           }
         },
         {
-          "categoryKeys": ["0x000000"],
+          "categoryKeys": ["global", "0x000000"],
           "title": {
             "en": "Chicken",
             "pl": "Kurczak",
