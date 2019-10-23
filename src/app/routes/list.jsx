@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import List, { Category } from "../components/list";
+import ProductList from "../components/list/products";
 import { setSelectedFoodCategoryKey } from "../../redux/actions/all";
 
 const mapStateToProps = ({ state }) => {
@@ -32,6 +33,7 @@ function ListRoute({
           <Category {...{ key, id: key, title: title[language] }} />
         ))}
       </List>
+      <ProductList />
     </section>
   );
 }
