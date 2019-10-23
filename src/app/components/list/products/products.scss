@@ -10,13 +10,12 @@
     font-size: 4.5vmin;
     height: 9.3vmin;
     color: gray;
-    border: 0.35vmin dashed black;
+    border: 0.35vmin dashed #00000000;
     border-image: url(../../../resources/images/border/dashed.png) 1 round;
     transition: border-image 0.3s;
   }
   .add-product:hover {
     transition: border-image 0.7s;
-    border: 0.35vmin dashed black;
     border-image: url(../../../resources/images/border/dashed-black.png) 1 round;
   }
 }
