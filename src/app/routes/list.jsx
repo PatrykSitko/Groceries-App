@@ -40,9 +40,8 @@ function ListRoute({
   const currentProducts = [products]
     .flat(Infinity)
     .filter(
-      ({ key, categoryKeys }) =>
-        categoryKeys.includes(selectedCategoryKey) &&
-        !selectedProducts.includes(key)
+      ({ selected, categoryKeys }) =>
+        categoryKeys.includes(selectedCategoryKey) && !selected
     );
   return (
     <section id="list">
