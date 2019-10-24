@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import ReactDOM from "react-dom";
 import "./footer.scss";
@@ -30,7 +30,7 @@ function MenuFooter({
   );
   return (
     <div style={{ width: "100%", position: "fixed", bottom: 0, left: 0 }}>
-      <footer {...{ id: "menu-footer", ...other }}>
+      <footer {...{ ref: useRef(), id: "menu-footer", ...other }}>
         {[entries].flat(Infinity).map((entry, index, entries) =>
           index !== entries.length - 1
             ? typeof entry === "object"
