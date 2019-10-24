@@ -2,15 +2,27 @@ import React from "react";
 import { connect } from "react-redux";
 
 import List, { Category } from "../components/list";
-import ProductList from "../components/list/products";
 import { setSelectedFoodCategoryKey } from "../../redux/actions/all";
+import ProductsList, { Product } from "../components/list/products";
 
 const mapStateToProps = ({ state }) => {
   const {
     user: { language },
-    food: { "selected-category-key": selectedCategoryKey, categories }
+    food: {
+      "selected-category-key": selectedCategoryKey,
+      categories,
+      entries: products,
+      "selected-entry-keys": selectedProducts
+    }
   } = state;
-  return { state, language, selectedCategoryKey, categories };
+  return {
+    state,
+    language,
+    selectedCategoryKey,
+    categories,
+    products,
+    selectedProducts
+  };
 };
 const mapDispatchToProps = dispatch => ({
   setSelectedCategoryKey: (state, key) =>
@@ -21,8 +33,17 @@ function ListRoute({
   state,
   setSelectedCategoryKey,
   selectedCategoryKey,
-  categories
+  categories,
+  products,
+  selectedProducts
 }) {
+  const currentProducts = [products]
+    .flat(Infinity)
+    .filter(
+      ({ key, categoryKeys }) =>
+        categoryKeys.includes(selectedCategoryKey) &&
+        !selectedProducts.includes(key)
+    );
   return (
     <section id="list">
       <List
@@ -33,7 +54,14 @@ function ListRoute({
           <Category {...{ key, id: key, title: title[language] }} />
         ))}
       </List>
-      <ProductList />
+      <ProductsList>
+        {currentProducts.map(({ title }) => (
+          <Product
+            key={Object.values(title).join("")}
+            title={title[language]}
+          />
+        ))}
+      </ProductsList>
     </section>
   );
 }
