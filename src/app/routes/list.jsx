@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import List, { Category } from "../components/list";
 import { setSelectedFoodCategoryKey } from "../../redux/actions/all";
 import ProductsList, { Product } from "../components/list/products";
+import { useFitAvailableSpace } from "../components/route/effect/fitAvailableSpace";
 
 const mapStateToProps = ({ state }) => {
   const {
@@ -13,7 +14,8 @@ const mapStateToProps = ({ state }) => {
       categories,
       entries: products,
       "selected-entry-keys": selectedProducts
-    }
+    },
+    window: { inner }
   } = state;
   return {
     state,
@@ -21,7 +23,8 @@ const mapStateToProps = ({ state }) => {
     selectedCategoryKey,
     categories,
     products,
-    selectedProducts
+    selectedProducts,
+    windowInnerDimensions: inner
   };
 };
 const mapDispatchToProps = dispatch => ({
@@ -35,7 +38,8 @@ function ListRoute({
   selectedCategoryKey,
   categories,
   products,
-  selectedProducts
+  selectedProducts,
+  windowInnerDimensions
 }) {
   const currentProducts = [products]
     .flat(Infinity)
@@ -44,7 +48,9 @@ function ListRoute({
         categoryKeys.includes(selectedCategoryKey) && !selected
     );
   return (
-    <section id="list">
+    <section
+      {...{ id: "list", style: useFitAvailableSpace(windowInnerDimensions) }}
+    >
       <List
         initiallySelectedCategoryKey={selectedCategoryKey}
         getSelectedCategoryKey={key => setSelectedCategoryKey(state, key)}
