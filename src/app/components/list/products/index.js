@@ -1,6 +1,7 @@
 import React from "react";
 import "./products.scss";
 import { connect } from "react-redux";
+export { default as Product } from "./product";
 
 const mapStateToProps = ({
   state: {
@@ -16,9 +17,11 @@ const addItemDescriptor = {
 };
 
 function ProductsList({ language, children: products, ...other }) {
+  delete other.dispatch;
   return (
     <section className={`product-list`} {...other}>
       <div className="add-product">{addItemDescriptor[language]}</div>
+      {products}
     </section>
   );
 }
