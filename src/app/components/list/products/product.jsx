@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import "./products.scss";
 
 import Checkbox from "../../button/checkbox";
 
 function Product({ className, title: product, ...other }) {
   delete other.dispatch;
+  const [checked, setChecked] = useState(false);
   return (
     <div
       className={`product${
@@ -14,7 +15,7 @@ function Product({ className, title: product, ...other }) {
     >
       {product}
       <div className="separator" />
-      <Checkbox />
+      <Checkbox useState={[checked, setChecked]} />
     </div>
   );
 }
