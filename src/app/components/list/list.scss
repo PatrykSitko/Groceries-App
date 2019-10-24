@@ -9,6 +9,8 @@
   .toggle-button {
     border-top-right-radius: 0.9vmin;
     border-bottom-right-radius: 0.9vmin;
+    padding: 0;
+    margin: 0;
   }
   .add-button {
     margin: 5vmin 7vmin;
@@ -26,6 +28,7 @@
   .selected-category {
     cursor: default;
     padding: 0;
+    margin: 0;
     text-align: center;
     font-size: 5vmin;
     line-height: 15vmin;
