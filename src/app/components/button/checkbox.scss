@@ -5,3 +5,8 @@
   background-color: whitesmoke;
   border: 0.03vmin solid gray;
 }
+.checkbox.checked {
+  background-image: url(../../resources/images/button/check.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
