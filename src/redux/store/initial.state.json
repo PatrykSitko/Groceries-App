@@ -3,7 +3,7 @@
   "state": {
     "food": {
       "selected-category-key": "0x000000",
-      "selected-entries": [],
+      "selected-entry-keys": [],
       "categories": [
         {
           "title": {
@@ -36,6 +36,7 @@
       "entries": [
         {
           "categoryKeys": ["global", "0x000000"],
+          "key": "Bread",
           "title": {
             "en": "Bread",
             "pl": "Chleb",
@@ -45,6 +46,7 @@
         },
         {
           "categoryKeys": ["global", "0x000000"],
+          "key": "Chicken",
           "title": {
             "en": "Chicken",
             "pl": "Kurczak",
