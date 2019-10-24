@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import "./header.scss";
 
 import LoginButton from "../button/login";
@@ -19,7 +19,14 @@ function MenuHeader({
     >
       <div className="title">DRAWBOTICS</div>
     </header>,
-    <header {...{ key: "menu-header", className: "menu-header", ...other }}>
+    <header
+      {...{
+        ref: useRef(),
+        key: "menu-header",
+        id: "menu-header",
+        ...other
+      }}
+    >
       <div className="title">{title}</div>
       {/* eslint-disable-next-line jsx-a11y/alt-text*/}
       <img {...{ src, alt }} />
