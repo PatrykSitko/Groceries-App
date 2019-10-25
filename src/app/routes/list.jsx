@@ -12,8 +12,7 @@ const mapStateToProps = ({ state }) => {
     food: {
       "selected-category-key": selectedCategoryKey,
       categories,
-      entries: products,
-      "selected-entry-keys": selectedProducts
+      entries: products
     },
     window: { inner }
   } = state;
@@ -23,7 +22,6 @@ const mapStateToProps = ({ state }) => {
     selectedCategoryKey,
     categories,
     products,
-    selectedProducts,
     windowInnerDimensions: inner
   };
 };
@@ -38,15 +36,11 @@ function ListRoute({
   selectedCategoryKey,
   categories,
   products,
-  selectedProducts,
   windowInnerDimensions
 }) {
   const currentProducts = [products]
     .flat(Infinity)
-    .filter(
-      ({ selected, categoryKeys }) =>
-        categoryKeys.includes(selectedCategoryKey) && !selected
-    );
+    .filter(({ categoryKeys }) => categoryKeys.includes(selectedCategoryKey));
   return (
     <section
       {...{ id: "list", style: useFitAvailableSpace(windowInnerDimensions) }}
@@ -60,10 +54,11 @@ function ListRoute({
         ))}
       </List>
       <ProductsList>
-        {currentProducts.map(({ title }) => (
+        {currentProducts.map(({ selected, title }) => (
           <Product
             key={Object.values(title).join("")}
             title={title[language]}
+            isSelected={selected}
           />
         ))}
       </ProductsList>

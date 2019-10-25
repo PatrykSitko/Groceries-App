@@ -3,9 +3,9 @@ import "./products.scss";
 
 import Checkbox from "../../button/checkbox";
 
-function Product({ className, title: product, ...other }) {
+function Product({ isSelected, className, title: product, ...other }) {
   delete other.dispatch;
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(isSelected);
   return (
     <div
       className={`product${

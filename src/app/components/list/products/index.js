@@ -18,10 +18,16 @@ const addItemDescriptor = {
 
 function ProductsList({ language, children: products, ...other }) {
   delete other.dispatch;
+  const selectableProducts = [products]
+    .flat(Infinity)
+    .filter(({ props: { isSelected } }) => !isSelected);
+  const selectedProducts = [products]
+    .flat(Infinity)
+    .filter(({ props: { isSelected } }) => isSelected);
   return (
     <section className={`product-list`} {...other}>
       <div className="add-product">{addItemDescriptor[language]}</div>
-      {products}
+      <div className="selectable-products">{selectableProducts}</div>
     </section>
   );
 }
