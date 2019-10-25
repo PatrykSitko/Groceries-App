@@ -32,6 +32,10 @@ function List({
           const currentCategoryElement = document.getElementById(
             selectedCategoryID
           );
+          if (!currentCategoryElement) {
+            clearTimeout(updateTimeout);
+            return;
+          }
           const currentCategoryRef = getElementRef(currentCategoryElement);
           const currentCategoriesStyle = { width: 0 };
           if (currentCategoryRef && currentCategoryRef.current) {
@@ -46,6 +50,10 @@ function List({
           const currentToggleButtonElement = document.getElementById(
             "list-toggle-button"
           );
+          if (!currentToggleButtonElement) {
+            clearTimeout(updateTimeout);
+            return;
+          }
           const currentToggleButtonRef = getElementRef(
             currentToggleButtonElement
           );
