@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
 import "./list.scss";
 
 import { getElementRef, getElementRect } from "../tools/element";
@@ -9,13 +8,7 @@ import AddButton from "../button/add";
 
 export { default as Category } from "./category";
 
-const mapStateToProps = ({
-  state: {
-    window: { inner }
-  }
-}) => ({ windowInnerDimensions: inner });
 function List({
-  windowInnerDimensions,
   initiallySelectedCategoryKey,
   getSelectedCategoryKey: setSelected,
   children: categories,
@@ -69,13 +62,7 @@ function List({
         }, 1)
       );
     }
-  }, [
-    categoriesStyle,
-    selectedCategoryID,
-    windowInnerDimensions,
-    updateInterval,
-    setUpdateInterval
-  ]);
+  }, [categoriesStyle, selectedCategoryID, updateInterval, setUpdateInterval]);
   return (
     <div className="list" {...other}>
       {React.cloneElement(selectedCategory, {
@@ -112,4 +99,4 @@ function List({
   );
 }
 
-export default connect(mapStateToProps)(List);
+export default List;
