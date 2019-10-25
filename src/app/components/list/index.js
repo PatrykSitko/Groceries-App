@@ -22,6 +22,7 @@ function List({
   ...other
 }) {
   delete other.dispatch;
+  const [updateInterval, setUpdateInterval] = useState(undefined);
   const [categoriesStyle, setCategoriesStyle] = useState({});
   const [selectedCategoryID, setSelectedCategoryID] = useState(
     initiallySelectedCategoryKey
@@ -32,33 +33,49 @@ function List({
     ({ props: { id } }) => id === selectedCategoryID
   )[0];
   useEffect(() => {
-    const currentCategoryElement = document.getElementById(selectedCategoryID);
-    const currentCategoryRef = getElementRef(currentCategoryElement);
-    const currentCategoriesStyle = { width: 0 };
-    if (currentCategoryRef && currentCategoryRef.current) {
-      const currentCategoryRect = getElementRect(currentCategoryRef);
-      if (currentCategoryRect) {
-        const { left, bottom, width } = currentCategoryRect;
-        currentCategoriesStyle.left = left;
-        currentCategoriesStyle.top = bottom;
-        currentCategoriesStyle.width += width - vmin(0.7);
-      }
+    if (!updateInterval) {
+      setUpdateInterval(
+        setInterval(() => {
+          const currentCategoryElement = document.getElementById(
+            selectedCategoryID
+          );
+          const currentCategoryRef = getElementRef(currentCategoryElement);
+          const currentCategoriesStyle = { width: 0 };
+          if (currentCategoryRef && currentCategoryRef.current) {
+            const currentCategoryRect = getElementRect(currentCategoryRef);
+            if (currentCategoryRect) {
+              const { left, bottom, width } = currentCategoryRect;
+              currentCategoriesStyle.left = left;
+              currentCategoriesStyle.top = bottom;
+              currentCategoriesStyle.width += width - vmin(0.7);
+            }
+          }
+          const currentToggleButtonElement = document.getElementById(
+            "list-toggle-button"
+          );
+          const currentToggleButtonRef = getElementRef(
+            currentToggleButtonElement
+          );
+          if (currentToggleButtonRef && currentToggleButtonRef.current) {
+            const { width } = getElementRect(currentToggleButtonRef);
+            currentCategoriesStyle.width += width;
+          }
+          if (
+            Object.values(currentCategoriesStyle).join("") !==
+            Object.values(categoriesStyle).join("")
+          ) {
+            setCategoriesStyle(currentCategoriesStyle);
+          }
+        }, 1)
+      );
     }
-    const currentToggleButtonElement = document.getElementById(
-      "list-toggle-button"
-    );
-    const currentToggleButtonRef = getElementRef(currentToggleButtonElement);
-    if (currentToggleButtonRef && currentToggleButtonRef.current) {
-      const { width } = getElementRect(currentToggleButtonRef);
-      currentCategoriesStyle.width += width;
-    }
-    if (
-      Object.values(currentCategoriesStyle).join("") !==
-      Object.values(categoriesStyle).join("")
-    ) {
-      setCategoriesStyle(currentCategoriesStyle);
-    }
-  }, [categoriesStyle, selectedCategoryID, windowInnerDimensions]);
+  }, [
+    categoriesStyle,
+    selectedCategoryID,
+    windowInnerDimensions,
+    updateInterval,
+    setUpdateInterval
+  ]);
   return (
     <div className="list" {...other}>
       {React.cloneElement(selectedCategory, {
