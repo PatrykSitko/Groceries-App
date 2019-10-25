@@ -12,16 +12,22 @@ function Product({
 }) {
   delete other.dispatch;
   const [checked, setChecked] = useState(isSelected);
+  const [effectClass, setEffectClass] = useState(undefined);
   useEffect(() => {
     if (typeof onSelect === "function" && checked !== isSelected) {
-      onSelect(checked);
+      setChecked(checked);
+      setEffectClass("hide");
+      setTimeout(() => {
+        setEffectClass(undefined);
+        onSelect(checked);
+      }, 300);
     }
   }, [isSelected, onSelect, checked]);
   return (
     <div
       className={`product${
-        typeof className === "string" ? ` ${className}` : ""
-      }`}
+        typeof effectClass === "string" ? ` ${effectClass}` : ""
+      }${typeof className === "string" ? ` ${className}` : ""}`}
       {...other}
     >
       {product}
