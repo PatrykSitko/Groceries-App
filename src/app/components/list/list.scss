@@ -50,13 +50,10 @@
   }
 
   .categories {
-    margin-top: 16.7vmin;
-    margin-left: 3.5vmin;
     border: 0.35vmin solid $listCategoryBorderColor;
     border-bottom: 0 solid #00000000;
     border-radius: 0.9vmin;
     position: fixed;
-    width: calc(100% - 37.2vmin);
     transform: scaleY(height);
     transform-origin: top;
     transition: transform 0.3s ease-in-out;
