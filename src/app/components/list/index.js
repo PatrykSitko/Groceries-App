@@ -15,7 +15,7 @@ function List({
   ...other
 }) {
   delete other.dispatch;
-  const [updateInterval, setUpdateInterval] = useState(undefined);
+  const [updateTimeout, setUpdateTimeout] = useState(undefined);
   const [categoriesStyle, setCategoriesStyle] = useState({});
   const [selectedCategoryID, setSelectedCategoryID] = useState(
     initiallySelectedCategoryKey
@@ -26,9 +26,9 @@ function List({
     ({ props: { id } }) => id === selectedCategoryID
   )[0];
   useEffect(() => {
-    if (!updateInterval) {
-      setUpdateInterval(
-        setInterval(() => {
+    if (!updateTimeout) {
+      setUpdateTimeout(
+        setTimeout(() => {
           const currentCategoryElement = document.getElementById(
             selectedCategoryID
           );
@@ -59,10 +59,11 @@ function List({
           ) {
             setCategoriesStyle(currentCategoriesStyle);
           }
+          setUpdateTimeout(clearTimeout(updateTimeout));
         }, 1)
       );
     }
-  }, [categoriesStyle, selectedCategoryID, updateInterval, setUpdateInterval]);
+  }, [categoriesStyle, selectedCategoryID, updateTimeout, setUpdateTimeout]);
   return (
     <div className="list" {...other}>
       {React.cloneElement(selectedCategory, {
