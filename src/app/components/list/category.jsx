@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 
 function ListCategory({
   id: categoryKey,
@@ -8,6 +8,7 @@ function ListCategory({
 }) {
   return (
     <div
+      ref={useRef()}
       id={categoryKey}
       className={`category${
         typeof className === "string" ? ` ${className}` : ""
