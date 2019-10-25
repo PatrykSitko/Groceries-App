@@ -2,7 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 
 import List, { Category } from "../components/list";
-import { setSelectedFoodCategoryKey } from "../../redux/actions/all";
+import {
+  setSelectedFoodCategoryKey,
+  setIsSelectedFoodEntry
+} from "../../redux/actions/all";
 import ProductsList, { Product } from "../components/list/products";
 import { useFitAvailableSpace } from "../components/route/effect/fitAvailableSpace";
 
@@ -27,13 +30,22 @@ const mapStateToProps = ({ state }) => {
 };
 const mapDispatchToProps = dispatch => ({
   setSelectedCategoryKey: (state, key) =>
-    dispatch(setSelectedFoodCategoryKey({ state, key }))
+    dispatch(setSelectedFoodCategoryKey({ state, key })),
+  setIsSelectedFoodEntry: (state, tittleArray, isSelected) =>
+    dispatch(
+      setIsSelectedFoodEntry({
+        state,
+        foodEntryTittleArray: tittleArray,
+        isSelected
+      })
+    )
 });
 function ListRoute({
   language,
   state,
   setSelectedCategoryKey,
   selectedCategoryKey,
+  setIsSelectedFoodEntry,
   categories,
   products,
   windowInnerDimensions
@@ -59,6 +71,9 @@ function ListRoute({
             key={Object.values(title).join("")}
             title={title[language]}
             isSelected={selected}
+            onSelect={isSelected =>
+              setIsSelectedFoodEntry(state, title, isSelected)
+            }
           />
         ))}
       </ProductsList>

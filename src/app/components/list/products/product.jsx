@@ -1,11 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./products.scss";
 
 import Checkbox from "../../button/checkbox";
 
-function Product({ isSelected, className, title: product, ...other }) {
+function Product({
+  onSelect,
+  isSelected,
+  className,
+  title: product,
+  ...other
+}) {
   delete other.dispatch;
   const [checked, setChecked] = useState(isSelected);
+  useEffect(() => {
+    if (typeof onSelect === "function" && checked !== isSelected) {
+      onSelect(checked);
+    }
+  }, [isSelected, onSelect, checked]);
   return (
     <div
       className={`product${
