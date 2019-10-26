@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./list.scss";
 
 import { getElementRef, getElementRect } from "../tools/element";
-import { vmin } from "../tools/vscale";
 import ToggleButton from "../button/toggle";
 import AddButton from "../button/add";
 
@@ -44,7 +43,7 @@ function List({
               const { left, bottom, width } = currentCategoryRect;
               currentCategoriesStyle.left = left;
               currentCategoriesStyle.top = bottom;
-              currentCategoriesStyle.width += width - vmin(0.7);
+              currentCategoriesStyle.width += width;
             }
           }
           const currentToggleButtonElement = document.getElementById(
@@ -90,10 +89,16 @@ function List({
       >
         {categories
           .filter(({ props: { id } }) => id !== selectedCategoryID)
-          .map(category => {
+          .map((category, index, categories) => {
             const key = category.props.id;
             return React.cloneElement(category, {
               key,
+              className:
+                index === 0
+                  ? "first"
+                  : index === categories.length - 1
+                  ? "last"
+                  : undefined,
               onClick: () => {
                 if (typeof setSelected === "function") {
                   setSelected(key);

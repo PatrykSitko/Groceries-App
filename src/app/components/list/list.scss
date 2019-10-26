@@ -22,8 +22,17 @@
     padding: 3vmin;
     color: $listCategoryColor;
     background-color: white;
-    border-bottom: 0.35vmin solid $listCategoryBorderColor;
+    border: 0.35vmin solid $listCategoryBorderColor;
+    border-top: 0px solid #00000000;
     cursor: pointer;
+  }
+  .category.first {
+    border-top-left-radius: 0.9vmin;
+    border-top-right-radius: 0.9vmin;
+  }
+  .category.last {
+    border-bottom-left-radius: 0.9vmin;
+    border-bottom-right-radius: 0.9vmin;
   }
 
   .selected-category {
@@ -51,13 +60,14 @@
   }
 
   .categories {
-    border: 0.35vmin solid $listCategoryBorderColor;
-    border-bottom: 0 solid #00000000;
-    border-radius: 0.9vmin;
+    border-top: 0.35vmin solid $listCategoryBorderColor;
+    border-radius: 1.2vmin;
+    height: max-content;
     position: fixed;
     @extend .expandShrink-effect-add-to-default-class;
   }
   .categories.hidden {
+    height: max-content;
     @extend .expandShrink-effect-add-to-hidden-class;
   }
 }
