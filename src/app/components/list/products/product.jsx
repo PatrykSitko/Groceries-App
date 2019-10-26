@@ -12,7 +12,13 @@ function Product({
 }) {
   delete other.dispatch;
   const [checked, setChecked] = useState(isSelected);
-  const [effectClass, setEffectClass] = useState(undefined);
+  const [effectClass, setEffectClass] = useState("hide");
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setEffectClass(undefined);
+      clearTimeout(timeout);
+    }, 1);
+  }, []);
   useEffect(() => {
     if (typeof onSelect === "function" && checked !== isSelected) {
       setChecked(checked);
