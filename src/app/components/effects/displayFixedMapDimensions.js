@@ -11,9 +11,12 @@ export function useDisplayFixedMapDimensions(
   useEffect(() => {
     if (element) {
       const elementRef = getElementRef(element);
-      const { top, left, width, height } = getElementRect(elementRef);
-      if (!ObjectIncludesObject(style, { top, left, width, height })) {
-        setStyle({ top, left, width, height });
+      const rect = getElementRect(elementRef);
+      if (rect) {
+        const { top, left, width, height } = rect;
+        if (!ObjectIncludesObject(style, { top, left, width, height })) {
+          setStyle({ top, left, width, height });
+        }
       }
     }
   }, [element, style, setStyle, windowInnerDimensions]);
