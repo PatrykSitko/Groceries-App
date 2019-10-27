@@ -43,7 +43,7 @@ function useOpacityEffect(display) {
       const hiddenTimeout = setTimeout(() => {
         setHidden(true);
         clearTimeout(hiddenTimeout);
-      }, 500);
+      }, 300);
     }
     if (display && (!effectClass || hidden)) {
       setHidden(false);
