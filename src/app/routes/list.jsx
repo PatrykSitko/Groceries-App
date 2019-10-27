@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { connect } from "react-redux";
 
-import List, { Category } from "../components/list";
+import List, { Category, AddCategory } from "../components/list";
 import {
   setSelectedFoodCategoryKey,
   setIsSelectedFoodEntry
 } from "../../redux/actions/all";
 import ProductsList, { Product } from "../components/list/products";
-import { useFitAvailableSpace } from "../components/route/effect/fitAvailableSpace";
+import { useFitAvailableSpace } from "../components/effects";
+import Popup from "../components/popup";
 
 const mapStateToProps = ({ state }) => {
   const {
@@ -17,7 +18,8 @@ const mapStateToProps = ({ state }) => {
       categories,
       entries: products
     },
-    window: { inner }
+    window: { inner },
+    routes: { "supported-languages": supportedLanguages }
   } = state;
   return {
     state,
@@ -25,7 +27,8 @@ const mapStateToProps = ({ state }) => {
     selectedCategoryKey,
     categories,
     products,
-    windowInnerDimensions: inner
+    windowInnerDimensions: inner,
+    supportedLanguages
   };
 };
 const mapDispatchToProps = dispatch => ({
@@ -40,6 +43,7 @@ const mapDispatchToProps = dispatch => ({
       })
     )
 });
+
 function ListRoute({
   language,
   state,
@@ -48,16 +52,23 @@ function ListRoute({
   setIsSelectedFoodEntry,
   categories,
   products,
-  windowInnerDimensions
+  windowInnerDimensions,
+  supportedLanguages
 }) {
   const currentProducts = [products]
     .flat(Infinity)
     .filter(({ categoryKeys }) => categoryKeys.includes(selectedCategoryKey));
+  const [addButtonClicked, setAddButtonClicked] = useState(false);
   return (
     <section
-      {...{ id: "list", style: useFitAvailableSpace(windowInnerDimensions) }}
+      {...{
+        id: "route",
+        ref: useRef(),
+        style: useFitAvailableSpace(windowInnerDimensions)
+      }}
     >
       <List
+        onAddClick={() => setAddButtonClicked(!addButtonClicked)}
         initiallySelectedCategoryKey={selectedCategoryKey}
         getSelectedCategoryKey={key => setSelectedCategoryKey(state, key)}
       >
@@ -65,6 +76,17 @@ function ListRoute({
           <Category {...{ key, id: key, title: title[language] }} />
         ))}
       </List>
+      <Popup
+        {...{
+          windowInnerDimensions,
+          useState: [addButtonClicked, setAddButtonClicked]
+        }}
+      >
+        <AddCategory
+          currentLanguage={language}
+          supportedLanguages={supportedLanguages}
+        />
+      </Popup>
       <ProductsList>
         {currentProducts.map(({ selected, title }) => (
           <Product
