@@ -21,7 +21,7 @@ function Popup({
         className: effectClass,
         style,
         onClick: ({ target }) =>
-          target.id === "popup-background" ? setDisplay(!display) : ""
+          target.id === "popup-background" ? setDisplay(false) : ""
       }}
     >
       <div id="popup" {...other}>
