@@ -23,9 +23,10 @@ function Product({
     if (typeof onSelect === "function" && checked !== isSelected) {
       setChecked(checked);
       setEffectClass("hide");
-      setTimeout(() => {
+      const timeout = setTimeout(() => {
         setEffectClass(undefined);
         onSelect(checked);
+        clearTimeout(timeout);
       }, 300);
     }
   }, [isSelected, onSelect, checked]);
