@@ -20,9 +20,12 @@ function LanguageButton({ language, languageDescriptors }) {
     if (ref && ref.current && !updateInterval) {
       setUpdateInterval(
         setInterval(() => {
-          const { width } = ReactDOM.findDOMNode(
-            ref.current
-          ).getBoundingClientRect();
+          const domNode = ReactDOM.findDOMNode(ref.current);
+          if (!domNode) {
+            clearInterval(updateInterval);
+            return;
+          }
+          const { width } = domNode.getBoundingClientRect();
           if (
             !languageSelectionStyle ||
             languageSelectionStyle.width !== width
