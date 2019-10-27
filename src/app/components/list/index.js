@@ -6,8 +6,10 @@ import ToggleButton from "../button/toggle";
 import AddButton from "../button/add";
 
 export { default as Category } from "./category";
+export { default as AddCategory } from "./category/add";
 
 function List({
+  onAddClick,
   initiallySelectedCategoryKey,
   getSelectedCategoryKey: setSelected,
   children: categories,
@@ -82,7 +84,7 @@ function List({
         }`
       })}
       <ToggleButton id="list-toggle-button" useState={toggleButtonState} />
-      <AddButton />
+      <AddButton onClick={onAddClick} />
       <div
         className={`categories${isToggled ? "" : " hidden"}`}
         style={categoriesStyle}
