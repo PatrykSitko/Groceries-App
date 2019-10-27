@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getElementRef, getElementRect } from "../../tools/element";
+import { getElementRef, getElementRect } from "../tools/element";
 
 export function useFitAvailableSpace(windowInnerDimensions) {
   const [style, setStyle] = useState({
