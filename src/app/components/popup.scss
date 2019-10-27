@@ -8,11 +8,12 @@
   background-color: rgba(255, 255, 255, 0.9);
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
-  cursor: pointer;
+  cursor: default;
 }
 
 #popup-background.visible {
   opacity: 1;
+  cursor: pointer;
 }
 
 #popup {
