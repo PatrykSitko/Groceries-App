@@ -41,7 +41,7 @@
     border-image: url(../../../resources/images/border/dashed-black.png) 1 round;
   }
 
-  .toggle-selected-products {
+  .toggle-products {
     display: flex;
     font-size: 4vmin;
     color: lightgray;
@@ -55,10 +55,18 @@
       background-color: #00000000;
     }
   }
-  .selected-products {
+
+  .toggle-products.closer {
+    margin-top: 3vmin;
+  }
+
+  .selected-products,
+  .purchased-products {
+    height: max-content;
     @extend .expandShrink-effect-add-to-default-class;
   }
-  .selected-products.hidden {
+  .selected-products.hidden,
+  .purchased-products.hidden {
     @extend .expandShrink-effect-add-to-hidden-class;
   }
 }
