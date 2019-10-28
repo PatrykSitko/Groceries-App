@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./popup.scss";
 
-import { useDisplayFixedMapDimensions } from "./effects";
+import { useDisplayFixedMapDimensions } from "../../effects";
 
-function Popup({
+export function Popup({ children, ...other }) {
+  return <div id="popup">{children}</div>;
+}
+function PopupScreen({
   useState: [display, setDisplay],
   windowInnerDimensions,
   children,
@@ -23,10 +26,9 @@ function Popup({
         onClick: ({ target }) =>
           target.id === "popup-background" ? setDisplay(false) : ""
       }}
+      {...other}
     >
-      <div id="popup" {...other}>
-        {children}
-      </div>
+      {children}
     </section>
   );
 }
@@ -55,4 +57,4 @@ function useOpacityEffect(display) {
   }, [hidden, display, effectClass]);
   return { hidden, effectClass };
 }
-export default Popup;
+export default PopupScreen;
