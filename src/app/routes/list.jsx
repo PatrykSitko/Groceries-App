@@ -8,7 +8,7 @@ import {
 } from "../../redux/actions/all";
 import ProductsList, { Product } from "../components/list/products";
 import { useFitAvailableSpace } from "../components/effects";
-import Popup from "../components/popup";
+import PopupScreen, { Popup } from "../components/screen/container/popup";
 
 const mapStateToProps = ({ state }) => {
   const {
@@ -76,17 +76,19 @@ function ListRoute({
           <Category {...{ key, id: key, title: title[language] }} />
         ))}
       </List>
-      <Popup
+      <PopupScreen
         {...{
           windowInnerDimensions,
           useState: [addButtonClicked, setAddButtonClicked]
         }}
       >
-        <AddCategory
-          currentLanguage={language}
-          supportedLanguages={supportedLanguages}
-        />
-      </Popup>
+        <Popup>
+          <AddCategory
+            currentLanguage={language}
+            supportedLanguages={supportedLanguages}
+          />
+        </Popup>
+      </PopupScreen>
       <ProductsList>
         {currentProducts.map(({ selected, title }) => (
           <Product
