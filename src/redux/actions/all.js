@@ -11,3 +11,4 @@ export {
   default as setSelectedFoodCategoryKey
 } from "./set/food/selectedCategoryKey";
 export { default as setIsSelectedFoodEntry } from "./set/food/entry/selected";
+export { default as setFoodEntries } from "./set/food/entries";
