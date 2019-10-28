@@ -22,15 +22,25 @@ const toggleSelectedDescriptor = {
   fr: "Sélectionné",
   nl: "Gekozen"
 };
+
+const togglePurchasedDescriptor = {
+  en: "Purchased",
+  pl: "Kupione",
+  fr: "Acheté",
+  nl: "Gekocht"
+};
+
 function ProductsList({ language, children: products, ...other }) {
   delete other.dispatch;
   const [toggleSelected, setToggleSelected] = useState(false);
+  const [togglePurchased, setTogglePurchased] = useState(false);
   const selectableProducts = [products]
     .flat(Infinity)
     .filter(({ props: { isSelected } }) => !isSelected);
   const selectedProducts = [products]
     .flat(Infinity)
     .filter(({ props: { isSelected } }) => isSelected);
+  const purchasedProducts = [];
   return (
     <section className={`product-list`} {...other}>
       <div className="add-product">{addItemDescriptor[language]}</div>
@@ -41,7 +51,7 @@ function ProductsList({ language, children: products, ...other }) {
       )}
 
       {selectedProducts.length > 0 ? (
-        <div className="toggle-selected-products">
+        <div className="toggle-products">
           {toggleSelectedDescriptor[language]}
           <ToggleButton useState={[toggleSelected, setToggleSelected]} />
         </div>
@@ -51,6 +61,29 @@ function ProductsList({ language, children: products, ...other }) {
       {selectedProducts.length > 0 ? (
         <div className={`selected-products${toggleSelected ? "" : " hidden"}`}>
           {selectedProducts}
+        </div>
+      ) : (
+        ""
+      )}
+      {purchasedProducts.length > 0 ? (
+        <div
+          className={`toggle-products${
+            selectedProducts.length > 0 && purchasedProducts.length > 0
+              ? " closer"
+              : ""
+          }`}
+        >
+          {togglePurchasedDescriptor[language]}
+          <ToggleButton useState={[togglePurchased, setTogglePurchased]} />
+        </div>
+      ) : (
+        ""
+      )}
+      {purchasedProducts.length > 0 ? (
+        <div
+          className={`purchased-products${togglePurchased ? "" : " hidden"}`}
+        >
+          {purchasedProducts}
         </div>
       ) : (
         ""
