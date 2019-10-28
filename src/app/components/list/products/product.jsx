@@ -22,12 +22,14 @@ function Product({
     }, 1);
   }, []);
   useEffect(() => {
-    if (typeof onSelect === "function" && checked !== isSelected) {
+    if (checked !== isSelected) {
       setChecked(checked);
       setEffectClass("hide");
       const timeout = setTimeout(() => {
         setEffectClass(undefined);
-        onSelect(checked);
+        if (typeof onSelect === "function") {
+          onSelect(checked);
+        }
         clearTimeout(timeout);
       }, 300);
     }
