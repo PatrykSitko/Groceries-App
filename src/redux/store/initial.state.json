@@ -36,6 +36,10 @@
         {
           "categoryKeys": ["global", "0x000000"],
           "selected": false,
+          "purchased": {
+            "price": null,
+            "who": null
+          },
           "title": {
             "en": "Bread",
             "pl": "Chleb",
@@ -46,6 +50,10 @@
         {
           "categoryKeys": ["global", "0x000000"],
           "selected": false,
+          "purchased": {
+            "price": null,
+            "who": null
+          },
           "title": {
             "en": "Chicken",
             "pl": "Kurczak",
