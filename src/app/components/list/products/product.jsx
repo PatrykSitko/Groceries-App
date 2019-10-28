@@ -46,17 +46,25 @@ function Product({
       }${typeof className === "string" ? ` ${className}` : ""}`}
       onClick={event => {
         if (typeof onClick === "function") {
-          onClick(event);
+          onClick(event, product);
         }
-        if (!event.target.className.includes("checkbox") && !isSelected) {
+        if (
+          !event.target.className.includes("checkbox") &&
+          !event.target.className.includes("delete") &&
+          !isSelected
+        ) {
           setDeleteMode(!deleteMode);
-          // if (typeof onDelete === "function" && !isSelected) {
-          // setEffectClass("hide");
-          // const timeout = setTimeout(() => {
-          //   onDelete(product);
-          //   clearTimeout(timeout);
-          // }, 300);
-          // }
+        }
+        if (
+          event.target.className.includes("delete") &&
+          typeof onDelete === "function"
+        ) {
+          setEffectClass("hide");
+          const timeout = setTimeout(() => {
+            setDeleteMode(!deleteMode);
+            onDelete(product, event);
+            clearTimeout(timeout);
+          }, 300);
         }
       }}
       {...other}
