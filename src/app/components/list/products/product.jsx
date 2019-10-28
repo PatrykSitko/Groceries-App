@@ -6,6 +6,8 @@ import Checkbox from "../../button/checkbox";
 function Product({
   onSelect,
   isSelected,
+  isPurchased = { who: null, price: null },
+  onPurchase,
   className,
   title: product,
   ...other
