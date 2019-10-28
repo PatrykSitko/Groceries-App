@@ -98,6 +98,7 @@ function ListRoute({
             onSelect={isSelected =>
               setIsSelectedFoodEntry(state, title, isSelected)
             }
+            onDelete={product => alert(product)}
           />
         ))}
       </ProductsList>
