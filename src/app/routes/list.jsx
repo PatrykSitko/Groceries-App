@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import List, { Category, AddCategory } from "../components/list";
 import {
   setSelectedFoodCategoryKey,
-  setIsSelectedFoodEntry
+  setIsSelectedFoodEntry,
+  setFoodEntries
 } from "../../redux/actions/all";
 import ProductsList, { Product } from "../components/list/products";
 import { useFitAvailableSpace } from "../components/effects";
@@ -41,7 +42,18 @@ const mapDispatchToProps = dispatch => ({
         foodEntryTittleArray: tittleArray,
         isSelected
       })
-    )
+    ),
+  deleteFoodEntry: (state, productTitle, language) => {
+    const currentFoodEntries = state.food.entries;
+    dispatch(
+      setFoodEntries({
+        state,
+        foodEntries: [currentFoodEntries]
+          .flat(Infinity)
+          .filter(({ title }) => title[language] !== productTitle)
+      })
+    );
+  }
 });
 
 function ListRoute({
@@ -53,7 +65,8 @@ function ListRoute({
   categories,
   products,
   windowInnerDimensions,
-  supportedLanguages
+  supportedLanguages,
+  deleteFoodEntry
 }) {
   const currentProducts = [products]
     .flat(Infinity)
@@ -98,7 +111,7 @@ function ListRoute({
             onSelect={isSelected =>
               setIsSelectedFoodEntry(state, title, isSelected)
             }
-            onDelete={product => alert(product)}
+            onDelete={product => deleteFoodEntry(state, product, language)}
           />
         ))}
       </ProductsList>
