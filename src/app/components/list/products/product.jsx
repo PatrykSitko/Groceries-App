@@ -4,13 +4,15 @@ import "./products.scss";
 import Checkbox from "../../button/checkbox";
 import DeleteButton from "../../button/delete";
 
+const FUNCTION = 1;
+
 function Product({
   onClick,
   onDelete,
   onSelect,
   isSelected,
+  useSetBuyItemState,
   isPurchased = { who: null, price: null },
-  onPurchase,
   className,
   title: product,
   ...other
@@ -19,6 +21,7 @@ function Product({
   const [checked, setChecked] = useState(isSelected);
   const [deleteMode, setDeleteMode] = useState(false);
   const [deleted, setDeleted] = useState(false);
+  const setBuyMode = useSetBuyItemState[FUNCTION];
   const [effectClass, setEffectClass] = useState("hide");
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -48,13 +51,18 @@ function Product({
         if (typeof onClick === "function") {
           onClick(event, product);
         }
+
         if (
           !event.target.className.includes("checkbox") &&
-          !event.target.className.includes("delete") &&
-          !isSelected
+          !event.target.className.includes("delete")
         ) {
-          setDeleteMode(!deleteMode);
+          if (isSelected) {
+            setBuyMode(product);
+          } else if (!isPurchased || !isPurchased.who) {
+            setDeleteMode(!deleteMode);
+          }
         }
+
         if (
           event.target.className.includes("delete") &&
           typeof onDelete === "function"
