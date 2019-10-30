@@ -65,6 +65,9 @@
     height: max-content;
     @extend .expandShrink-effect-add-to-default-class;
   }
+  .selected-products {
+    cursor: pointer;
+  }
   .selected-products.hidden,
   .purchased-products.hidden {
     @extend .expandShrink-effect-add-to-hidden-class;
