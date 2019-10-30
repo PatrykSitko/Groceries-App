@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import "./products.scss";
 import { connect } from "react-redux";
 import ToggleButton from "../../button/toggle";
+
 export { default as Product } from "./product";
+export { default as Popup } from "./purchase/popup";
 
 const mapStateToProps = ({
   state: {
