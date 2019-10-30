@@ -7,7 +7,10 @@ import {
   setIsSelectedFoodEntry,
   setFoodEntries
 } from "../../redux/actions/all";
-import ProductsList, { Product } from "../components/list/products";
+import ProductsList, {
+  Product,
+  Popup as ProductPopup
+} from "../components/list/products";
 import { useFitAvailableSpace } from "../components/effects";
 import PopupScreen, { Popup } from "../components/screen/container/popup";
 
@@ -72,6 +75,7 @@ function ListRoute({
     .flat(Infinity)
     .filter(({ categoryKeys }) => categoryKeys.includes(selectedCategoryKey));
   const [addButtonClicked, setAddButtonClicked] = useState(false);
+  const [buyModeItem, setBuyModeItem] = useState(false);
   return (
     <section
       {...{
@@ -112,9 +116,18 @@ function ListRoute({
               setIsSelectedFoodEntry(state, title, isSelected)
             }
             onDelete={product => deleteFoodEntry(state, product, language)}
+            useSetBuyItemState={[buyModeItem, setBuyModeItem]}
           />
         ))}
       </ProductsList>
+      <PopupScreen
+        {...{
+          windowInnerDimensions,
+          useState: [buyModeItem, setBuyModeItem]
+        }}
+      >
+        <ProductPopup />
+      </PopupScreen>
     </section>
   );
 }
