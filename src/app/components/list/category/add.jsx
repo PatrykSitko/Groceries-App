@@ -2,6 +2,7 @@ import React from "react";
 import "./add.scss";
 
 function AddListCategory({
+  product,
   currentLanguage: language,
   supportedLanguages,
   ...other
@@ -11,11 +12,7 @@ function AddListCategory({
     .filter(supportedLanguage => supportedLanguage !== language);
   return (
     <div {...other}>
-      Current language:{language}
-      <br />
-      supported languages: {supportedLanguages.join(" | ")}
-      <br />
-      translate languages: {translateLanguages.join("|")}
+      <div className="product-descriptor">{product}</div>
     </div>
   );
 }
