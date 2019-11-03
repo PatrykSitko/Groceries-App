@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import ReactDOM from "react-dom";
 import "./list.scss";
 
 import { getElementRef, getElementRect } from "../tools/element";
@@ -18,6 +19,7 @@ function List({
   ...other
 }) {
   delete other.dispatch;
+  const categoriesRef = useRef();
   const [updateTimeout, setUpdateTimeout] = useState(undefined);
   const [categoriesStyle, setCategoriesStyle] = useState({});
   const [selectedCategoryID, setSelectedCategoryID] = useState(
@@ -28,6 +30,63 @@ function List({
   const selectedCategory = categories.filter(
     ({ props: { id } }) => id === selectedCategoryID
   )[0];
+  useCurrentCategoriesWidthAndTopAligner(
+    categoriesStyle,
+    selectedCategoryID,
+    updateTimeout,
+    setUpdateTimeout,
+    setCategoriesStyle
+  );
+  return (
+    <div className={`list${className ? ` ${className}` : ""}`} {...other}>
+      {React.cloneElement(selectedCategory, {
+        className: `selected-category${
+          selectedCategory.props.title.length > 20 &&
+          categoriesStyle.width <= 434.3
+            ? " overflow"
+            : ""
+        }`
+      })}
+      <ToggleButton id="list-toggle-button" useState={toggleButtonState} />
+      <AddButton onClick={onAddClick} hidden={hideAddClick} />
+      <div
+        className={`categories${isToggled ? "" : " hidden"}`}
+        style={categoriesStyle}
+        ref={categoriesRef}
+      >
+        {categories
+          .filter(({ props: { id } }) => id !== selectedCategoryID)
+          .map((category, index, categories) => {
+            const key = category.props.id;
+            return React.cloneElement(category, {
+              key,
+              className:
+                index === 0
+                  ? "first"
+                  : index === categories.length - 1
+                  ? "last"
+                  : undefined,
+              onClick: () => {
+                if (typeof setSelected === "function") {
+                  setSelected(key);
+                }
+                setSelectedCategoryID(key);
+                setIsToggled(!isToggled);
+              }
+            });
+          })}
+      </div>
+    </div>
+  );
+}
+
+function useCurrentCategoriesWidthAndTopAligner(
+  categoriesStyle,
+  selectedCategoryID,
+  updateTimeout,
+  setUpdateTimeout,
+  setCategoriesStyle
+) {
   useEffect(() => {
     if (!updateTimeout) {
       setUpdateTimeout(
@@ -74,47 +133,13 @@ function List({
         }, 1)
       );
     }
-  }, [categoriesStyle, selectedCategoryID, updateTimeout, setUpdateTimeout]);
-  return (
-    <div className={`list${className ? ` ${className}` : ""}`} {...other}>
-      {React.cloneElement(selectedCategory, {
-        className: `selected-category${
-          selectedCategory.props.title.length > 20 &&
-          categoriesStyle.width <= 434.3
-            ? " overflow"
-            : ""
-        }`
-      })}
-      <ToggleButton id="list-toggle-button" useState={toggleButtonState} />
-      <AddButton onClick={onAddClick} hidden={hideAddClick} />
-      <div
-        className={`categories${isToggled ? "" : " hidden"}`}
-        style={categoriesStyle}
-      >
-        {categories
-          .filter(({ props: { id } }) => id !== selectedCategoryID)
-          .map((category, index, categories) => {
-            const key = category.props.id;
-            return React.cloneElement(category, {
-              key,
-              className:
-                index === 0
-                  ? "first"
-                  : index === categories.length - 1
-                  ? "last"
-                  : undefined,
-              onClick: () => {
-                if (typeof setSelected === "function") {
-                  setSelected(key);
-                }
-                setSelectedCategoryID(key);
-                setIsToggled(!isToggled);
-              }
-            });
-          })}
-      </div>
-    </div>
-  );
+  }, [
+    categoriesStyle,
+    selectedCategoryID,
+    updateTimeout,
+    setUpdateTimeout,
+    setCategoriesStyle
+  ]);
 }
 
 export default List;
