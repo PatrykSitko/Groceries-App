@@ -1,14 +1,21 @@
 import React from "react";
+import "./field.scss";
 
 const FUNCTION = 1;
 function InputField({ useState: inputState, ...other }) {
   const setInputText = inputState[FUNCTION];
   return (
-    <div className="input-field" {...other}>
-      <form onChange={e => setInputText(e.target.value)}>
-        <input type="text" name="input-field" />
-      </form>
-    </div>
+    <form
+      onSubmit={e => e.preventDefault()}
+      onChange={e => setInputText(e.target.value)}
+    >
+      <input
+        className="input-field"
+        type="text"
+        name="input-field"
+        {...other}
+      />
+    </form>
   );
 }
 
