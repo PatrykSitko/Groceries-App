@@ -9,6 +9,7 @@
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
   cursor: default;
+  overflow-y: auto;
 }
 
 #popup-background.visible {
@@ -19,7 +20,7 @@
 #popup {
   cursor: default;
   margin: 7vmin;
-  padding: 3vmin;
+  padding: 4vmin;
   width: calc(100% - 20vmin);
   border: 0.4vmin solid black;
   background-color: #f5f5f5;
