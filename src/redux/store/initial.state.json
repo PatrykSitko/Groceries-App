@@ -71,7 +71,8 @@
     },
     "user": {
       "name": null,
-      "language": "en"
+      "language": "en",
+      "coleagues": ["Robert", "Marta"]
     },
     "mouse": {
       "down": false,
