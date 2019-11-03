@@ -4,7 +4,11 @@ import "./popup.scss";
 import { useDisplayFixedMapDimensions } from "../../effects";
 
 export function Popup({ children, ...other }) {
-  return <div id="popup">{children}</div>;
+  return (
+    <div id="popup" {...other}>
+      {children}
+    </div>
+  );
 }
 function PopupScreen({
   useState: [display, setDisplay],
