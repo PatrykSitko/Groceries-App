@@ -126,7 +126,7 @@ function ListRoute({
           useState: [buyModeItem, setBuyModeItem]
         }}
       >
-        <ProductPopup />
+        <ProductPopup product={buyModeItem} {...{ language }} />
       </PopupScreen>
     </section>
   );
