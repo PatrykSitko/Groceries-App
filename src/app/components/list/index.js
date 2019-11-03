@@ -10,8 +10,10 @@ export { default as AddCategory } from "./category/add";
 
 function List({
   onAddClick,
+  hideAddClick = false,
   initiallySelectedCategoryKey,
   getSelectedCategoryKey: setSelected,
+  className,
   children: categories,
   ...other
 }) {
@@ -74,7 +76,7 @@ function List({
     }
   }, [categoriesStyle, selectedCategoryID, updateTimeout, setUpdateTimeout]);
   return (
-    <div className="list" {...other}>
+    <div className={`list${className ? ` ${className}` : ""}`} {...other}>
       {React.cloneElement(selectedCategory, {
         className: `selected-category${
           selectedCategory.props.title.length > 20 &&
@@ -84,7 +86,7 @@ function List({
         }`
       })}
       <ToggleButton id="list-toggle-button" useState={toggleButtonState} />
-      <AddButton onClick={onAddClick} />
+      <AddButton onClick={onAddClick} hidden={hideAddClick} />
       <div
         className={`categories${isToggled ? "" : " hidden"}`}
         style={categoriesStyle}
