@@ -1,0 +1,44 @@
+#popup.purchase {
+  padding: 4vmin;
+  .descriptor {
+    font-size: 6vmin;
+    margin-top: 3vmin;
+    margin-left: 4vmin;
+    margin-bottom: 7vmin;
+  }
+  .who,
+  .price {
+    margin-left: 4vmin;
+    margin-bottom: 2.5vmin;
+    font-size: 4vmin;
+  }
+  .input-field {
+    padding-top: 3vmin;
+    padding-left: 3vmin;
+    margin: 0;
+    margin-left: 4vmin;
+    width: calc(100% - 14vmin);
+    height: 10vmin;
+    border: 0.3vmin solid gray;
+  }
+  .who {
+    margin-top: 5vmin;
+  }
+  .list.coleagues {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    .selected-category {
+      margin: 0;
+      margin-left: 4vmin;
+      min-width: calc(100% - 29.5vmin);
+      text-align: left;
+      padding-left: 4vmin;
+      padding-right: -4vmin;
+      background-color: inherit;
+    }
+  }
+  .confirm-button {
+    margin-left: calc(100% - 9vmin);
+  }
+}
