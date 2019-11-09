@@ -10,7 +10,9 @@ export default ({
       ...state.food,
       categories:
         typeof foodCategories === "object" &&
-        foodCategories.constructor.name === "Array"
+        foodCategories.constructor.name === "Array" &&
+        state.food.categories.filter(({ key }) => key !== foodCategories.key)
+          .length === state.food.categories.length
           ? [foodCategories].flat(Infinity).filter(({ key }) => key !== "empty")
           : state.food.categories
     }
