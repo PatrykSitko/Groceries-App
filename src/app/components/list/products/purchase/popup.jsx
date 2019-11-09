@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState /*useEffect*/ } from "react";
 import InputField from "../../../input/field";
 import { connect } from "react-redux";
 import List, { Category } from "../../../list";
