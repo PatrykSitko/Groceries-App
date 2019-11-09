@@ -83,6 +83,7 @@
       "out": false,
       "wheel": false
     },
+    "navigator": { "onLine": false },
     "window": {
       "inner": null,
       "outer": null
