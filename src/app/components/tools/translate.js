@@ -1,4 +1,4 @@
-export default async function Translate(sourceLang, targetLang, sentence) {
+export async function translate(sourceLang, targetLang, sentence) {
   const checkedSentence = (() => {
     let sentenceToCheck = sentence;
     do {
