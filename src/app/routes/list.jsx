@@ -25,6 +25,7 @@ const mapStateToProps = ({ state }) => {
       entries: products
     },
     window: { inner },
+    navigator: { onLine },
     routes: { "supported-languages": supportedLanguages }
   } = state;
   return {
@@ -34,7 +35,8 @@ const mapStateToProps = ({ state }) => {
     categories,
     products,
     windowInnerDimensions: inner,
-    supportedLanguages
+    supportedLanguages,
+    isOnLine: onLine
   };
 };
 const mapDispatchToProps = dispatch => ({
@@ -79,6 +81,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 function ListRoute({
+  isOnLine,
   language,
   state,
   setSelectedCategoryKey,
@@ -94,7 +97,7 @@ function ListRoute({
   const currentProducts = [products]
     .flat(Infinity)
     .filter(({ categoryKeys }) => categoryKeys.includes(selectedCategoryKey));
-  const [translations, setTranslations] = useState({
+  const [translationPromises, setTranslationPromises] = useState({
     en: null,
     pl: null,
     fr: null,
@@ -113,39 +116,19 @@ function ListRoute({
   const translateLanguages = [supportedLanguages]
     .flat(Infinity)
     .filter(supportedLanguage => supportedLanguage !== language);
-  useEffect(() => {
-    if (!translations[language]) {
-      setTranslations({ [language]: addCategoryInputText });
-    }
-    if (!newCategoryTitlesToAdd[language]) {
-      setNewCategoryTitlesToAdd({ [language]: addCategoryInputText });
-    }
-    Object.entries(translations).forEach(([targetLanguage, value]) => {
-      if (!typeof value === "object") {
-        setTranslations({
-          ...translations,
-          [targetLanguage]: translate(
-            language,
-            targetLanguage,
-            addCategoryInputText
-          ).then(translation =>
-            setNewCategoryTitlesToAdd({
-              ...newCategoryTitlesToAdd,
-              [targetLanguage]: translation.responseData.translatedText
-            })
-          )
-        });
-      }
-    });
-  }, [
-    language,
-    translations,
-    translateLanguages,
+  useFetchAddCategoryTranslationPromises(
+    addCategoryConfirmed,
     addCategoryInputText,
+    language,
+    translateLanguages,
+    translationPromises,
+    isOnLine,
+    setTranslationPromises,
+    setAddButtonClicked,
     setAddCategoryInputText,
-    newCategoryTitlesToAdd,
-    setNewCategoryTitlesToAdd
-  ]);
+    setAddCategoryConfirmed
+  );
+  console.log(translationPromises);
   return (
     <section
       {...{
@@ -200,6 +183,57 @@ function ListRoute({
   );
 }
 
+function useFetchAddCategoryTranslationPromises(
+  addCategoryConfirmed,
+  addCategoryInputText,
+  language,
+  translateLanguages,
+  translationPromises,
+  isOnLine,
+  setTranslationPromises,
+  setAddButtonClicked,
+  setAddCategoryInputText,
+  setAddCategoryConfirmed
+) {
+  useEffect(() => {
+    if (addCategoryConfirmed && isOnLine) {
+      const __translationPromises__ = {};
+      translateLanguages.forEach(translateLanguage =>
+        !typeof __translationPromises__[translateLanguage] !== "object" &&
+        translateLanguage !== language
+          ? (__translationPromises__[translateLanguage] = translate(
+              language,
+              translateLanguage,
+              addCategoryInputText
+            ))
+          : ""
+      );
+      if (
+        Object.values(__translationPromises__).join("") !==
+        Object.values(translationPromises).join("")
+      ) {
+        setTranslationPromises({
+          [language]: addCategoryInputText,
+          ...__translationPromises__
+        });
+      }
+      setAddButtonClicked(false);
+      setAddCategoryInputText("");
+      setAddCategoryConfirmed(false);
+    }
+  }, [
+    setTranslationPromises,
+    setAddButtonClicked,
+    setAddCategoryInputText,
+    setAddCategoryConfirmed,
+    addCategoryConfirmed,
+    addCategoryInputText,
+    language,
+    translateLanguages,
+    translationPromises,
+    isOnLine
+  ]);
+}
 export default connect(
   mapStateToProps,
   mapDispatchToProps
