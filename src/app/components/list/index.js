@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import ReactDOM from "react-dom";
 import "./list.scss";
 
 import { getElementRef, getElementRect } from "../tools/element";
