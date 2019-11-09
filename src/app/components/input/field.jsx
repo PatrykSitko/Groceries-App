@@ -1,22 +1,25 @@
 import React, { useRef } from "react";
 import "./field.scss";
 
-function InputField({ useState: inputState, ...other }) {
+function InputField({ filterKeys, useState: inputState, ...other }) {
   const [inputText, setInputText] = inputState;
   return (
-    <form
-      onSubmit={e => e.preventDefault()}
-      onChange={e => setInputText(e.target.value)}
-    >
-      <input
-        ref={useRef()}
-        className="input-field"
-        type="text"
-        name="input-field"
-        defaultValue={inputText}
-        {...other}
-      />
-    </form>
+    <input
+      ref={useRef()}
+      className="input-field"
+      type="text"
+      name="input-field"
+      onChange={e =>
+        setInputText(
+          e.target.value
+            .split("")
+            .filter(key => ![filterKeys].flat(Infinity).includes(key))
+            .join("")
+        )
+      }
+      value={inputText}
+      {...other}
+    />
   );
 }
 
