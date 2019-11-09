@@ -1,6 +1,24 @@
 import { SET_FOOD_ENTRIES } from "../../types";
 
-export default ({ state, foodEntries }) => ({
+export default ({
+  state,
+  foodEntries = [
+    {
+      categoryKeys: ["empty"],
+      selected: false,
+      purchased: {
+        price: null,
+        who: null
+      },
+      title: {
+        en: "",
+        pl: "",
+        fr: "",
+        nl: ""
+      }
+    }
+  ]
+}) => ({
   type: SET_FOOD_ENTRIES,
   payload: {
     food: {
@@ -8,7 +26,9 @@ export default ({ state, foodEntries }) => ({
       entries:
         typeof foodEntries === "object" &&
         foodEntries.constructor.name === "Array"
-          ? foodEntries
+          ? [foodEntries]
+              .flat(Infinity)
+              .filter(({ categoryKeys }) => !categoryKeys.includes("empty"))
           : state.food.entries
     }
   }
