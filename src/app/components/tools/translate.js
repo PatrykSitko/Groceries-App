@@ -13,7 +13,7 @@ export async function translate(sourceLang, targetLang, sentence) {
       headers: {
         "x-rapidapi-host":
           "translated-mymemory---translation-memory.p.rapidapi.com",
-        "x-rapidapi-key": "159ba56b3bmsha72dcac3340e2fap1aff02jsn53571ca7511a"
+        "x-rapidapi-key": "eb933f782dmsh284070e30b3e02bp1a83c4jsnafd84ac40e6e"
       }
     }
   )
