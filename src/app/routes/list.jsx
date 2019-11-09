@@ -1,18 +1,20 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { connect } from "react-redux";
 
 import List, { Category, AddCategory } from "../components/list";
 import {
   setSelectedFoodCategoryKey,
   setIsSelectedFoodEntry,
-  setFoodEntries
+  setFoodEntries,
+  setFoodCategories
 } from "../../redux/actions/all";
 import ProductsList, {
   Product,
   Popup as ProductPopup
 } from "../components/list/products";
 import { useFitAvailableSpace } from "../components/effects";
-import PopupScreen, { Popup } from "../components/screen/container/popup";
+import PopupScreen from "../components/screen/container/popup";
+import { translate } from "../components/tools/translate";
 
 const mapStateToProps = ({ state }) => {
   const {
@@ -56,6 +58,23 @@ const mapDispatchToProps = dispatch => ({
           .filter(({ title }) => title[language] !== productTitle)
       })
     );
+  },
+  addFoodCategory: (state, titles = { en: "", pl: "", fr: "", nl: "" }) => {
+    const lastFoodCategoriesKey = state.food.categories
+      .map(({ key }) =>
+        key !== "global" ? parseInt(key.replace("#", ""), 10) : ""
+      )
+      .filter(key => key !== "")
+      .pop();
+    const newCategoryKey = "#".concat(
+      Number(lastFoodCategoriesKey + 1).toString(16)
+    );
+    dispatch(
+      setFoodCategories({
+        state,
+        foodCategories: { title: titles, key: newCategoryKey }
+      })
+    );
   }
 });
 
@@ -69,13 +88,64 @@ function ListRoute({
   products,
   windowInnerDimensions,
   supportedLanguages,
-  deleteFoodEntry
+  deleteFoodEntry,
+  addFoodCategory
 }) {
   const currentProducts = [products]
     .flat(Infinity)
     .filter(({ categoryKeys }) => categoryKeys.includes(selectedCategoryKey));
+  const [translations, setTranslations] = useState({
+    en: null,
+    pl: null,
+    fr: null,
+    nl: null
+  });
+  const [newCategoryTitlesToAdd, setNewCategoryTitlesToAdd] = useState({
+    en: null,
+    pl: null,
+    fr: null,
+    nl: null
+  });
   const [addButtonClicked, setAddButtonClicked] = useState(false);
   const [buyModeItem, setBuyModeItem] = useState(false);
+  const [addCategoryInputText, setAddCategoryInputText] = useState("");
+  const [addCategoryConfirmed, setAddCategoryConfirmed] = useState(false);
+  const translateLanguages = [supportedLanguages]
+    .flat(Infinity)
+    .filter(supportedLanguage => supportedLanguage !== language);
+  useEffect(() => {
+    if (!translations[language]) {
+      setTranslations({ [language]: addCategoryInputText });
+    }
+    if (!newCategoryTitlesToAdd[language]) {
+      setNewCategoryTitlesToAdd({ [language]: addCategoryInputText });
+    }
+    Object.entries(translations).forEach(([targetLanguage, value]) => {
+      if (!typeof value === "object") {
+        setTranslations({
+          ...translations,
+          [targetLanguage]: translate(
+            language,
+            targetLanguage,
+            addCategoryInputText
+          ).then(translation =>
+            setNewCategoryTitlesToAdd({
+              ...newCategoryTitlesToAdd,
+              [targetLanguage]: translation.responseData.translatedText
+            })
+          )
+        });
+      }
+    });
+  }, [
+    language,
+    translations,
+    translateLanguages,
+    addCategoryInputText,
+    setAddCategoryInputText,
+    newCategoryTitlesToAdd,
+    setNewCategoryTitlesToAdd
+  ]);
   return (
     <section
       {...{
@@ -99,12 +169,10 @@ function ListRoute({
           useState: [addButtonClicked, setAddButtonClicked]
         }}
       >
-        <Popup>
-          <AddCategory
-            currentLanguage={language}
-            supportedLanguages={supportedLanguages}
-          />
-        </Popup>
+        <AddCategory
+          useInputTextState={[addCategoryInputText, setAddCategoryInputText]}
+          useConfirmedState={[addCategoryConfirmed, setAddCategoryConfirmed]}
+        />
       </PopupScreen>
       <ProductsList>
         {currentProducts.map(({ selected, title }) => (

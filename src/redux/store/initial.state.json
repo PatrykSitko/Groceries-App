@@ -2,7 +2,7 @@
   "title": "Forever Young",
   "state": {
     "food": {
-      "selected-category-key": "0x000000",
+      "selected-category-key": "#000000",
       "categories": [
         {
           "title": {
@@ -20,7 +20,7 @@
             "fr": "Dîner de Noël",
             "nl": "Kerstdiner"
           },
-          "key": "0x000000"
+          "key": "#000000"
         },
         {
           "title": {
@@ -29,12 +29,12 @@
             "fr": "Nourriture de déjeuner",
             "nl": "Lunch eten"
           },
-          "key": "0x000001"
+          "key": "#000001"
         }
       ],
       "entries": [
         {
-          "categoryKeys": ["global", "0x000000"],
+          "categoryKeys": ["global", "#000000"],
           "selected": false,
           "purchased": {
             "price": null,
@@ -48,7 +48,7 @@
           }
         },
         {
-          "categoryKeys": ["global", "0x000000"],
+          "categoryKeys": ["global", "#000000"],
           "selected": false,
           "purchased": {
             "price": null,

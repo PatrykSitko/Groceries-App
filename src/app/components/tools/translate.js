@@ -8,5 +8,7 @@ export async function translate(sourceLang, targetLang, sentence) {
   })();
   return await fetch(
     `https://api.mymemory.translated.net/get?q=${checkedSentence}&langpair=${sourceLang}|${targetLang}`
-  ).then(res => res.json());
+  )
+    .then(res => res.json())
+    .then(json => json.responseData.translatedText);
 }

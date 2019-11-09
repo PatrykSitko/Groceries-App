@@ -25,10 +25,13 @@ function PopupScreen({
       {...{
         hidden,
         id: "popup-background",
-        className: effectClass,
+        className: `popup-background${effectClass ? ` ${effectClass}` : ""}`,
         style,
         onClick: ({ target }) =>
-          target.id === "popup-background" ? setDisplay(false) : ""
+          target.id === "popup-background" &&
+          target.className.includes("popup-background")
+            ? setDisplay(false)
+            : ""
       }}
       {...other}
     >

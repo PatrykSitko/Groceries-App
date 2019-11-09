@@ -71,7 +71,7 @@ function useUpdateCategoryRect(
             });
           }
           setUpdateTimeout(clearTimeout(updateTimeout));
-        }, 7)
+        }, 3)
       );
     }
   }, [categoryRect, setCategoryRect, updateTimeout, setUpdateTimeout]);
