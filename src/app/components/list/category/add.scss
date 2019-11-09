@@ -1,0 +1,24 @@
+@import "../../../styles.shared/colors";
+@import "../list";
+
+.add-category {
+  display: flex;
+  margin-top: 10.4vmin;
+  margin-left: 13vmin;
+  .category-descriptor {
+    display: absolute;
+    font-size: 8vmin;
+    color: $listCategoryColor;
+    background-color: white;
+    border: 0.3vmin solid $listCategoryBorderColor;
+    border-radius: 0.5vmin;
+    overflow: scroll;
+  }
+  .confirm-button {
+    border-radius: 0;
+    width: 14vmin;
+    height: 15.8vmin;
+    border-radius: 0.5vmin;
+    background-position-x: -0.8vmin;
+  }
+}
