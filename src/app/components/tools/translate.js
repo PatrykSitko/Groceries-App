@@ -7,7 +7,15 @@ export async function translate(sourceLang, targetLang, sentence) {
     return sentenceToCheck;
   })();
   return await fetch(
-    `https://api.mymemory.translated.net/get?q=${checkedSentence}&langpair=${sourceLang}|${targetLang}`
+    `https://translated-mymemory---translation-memory.p.rapidapi.com/api/get?q=${checkedSentence}&langpair=${sourceLang}|${targetLang}`,
+    {
+      method: "GET",
+      headers: {
+        "x-rapidapi-host":
+          "translated-mymemory---translation-memory.p.rapidapi.com",
+        "x-rapidapi-key": "159ba56b3bmsha72dcac3340e2fap1aff02jsn53571ca7511a"
+      }
+    }
   )
     .then(res => res.json())
     .then(json => json.responseData.translatedText);
