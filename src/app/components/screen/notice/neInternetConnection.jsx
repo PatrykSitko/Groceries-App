@@ -9,7 +9,9 @@ const onlineDescriptor = {
 };
 function NoInternetConnectionNotice({ language, userName, isOnLine }) {
   return (
-    <div className="no-internet-connection-notice" hidden={isOnLine}>
+    <div
+      className={`no-internet-connection-notice${isOnLine ? " hidden" : ""}`}
+    >
       {onlineDescriptor[language].replace(
         "[name]",
         userName ? ` ${userName}` : ""
