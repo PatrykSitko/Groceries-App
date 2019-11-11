@@ -203,7 +203,7 @@ function useFetchAddCategoryTranslationPromises(
   setNewCategoryTitlesToAdd
 ) {
   useEffect(() => {
-    if (addCategoryConfirmed && isOnLine) {
+    if (addCategoryConfirmed && isOnLine && addCategoryInputText.length > 0) {
       const translations = [];
       translateLanguages.forEach(translateLanguage =>
         translateLanguage !== language
