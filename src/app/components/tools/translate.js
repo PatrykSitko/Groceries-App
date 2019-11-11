@@ -18,5 +18,8 @@ export async function translate(sourceLang, targetLang, sentence) {
     }
   )
     .then(res => res.json())
-    .then(json => json.responseData.translatedText);
+    .then(json => ({
+      language: targetLang,
+      translation: json.responseData.translatedText
+    }));
 }
