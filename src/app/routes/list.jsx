@@ -97,18 +97,8 @@ function ListRoute({
   const currentProducts = [products]
     .flat(Infinity)
     .filter(({ categoryKeys }) => categoryKeys.includes(selectedCategoryKey));
-  const [translationPromises, setTranslationPromises] = useState({
-    en: null,
-    pl: null,
-    fr: null,
-    nl: null
-  });
-  const [newCategoryTitlesToAdd, setNewCategoryTitlesToAdd] = useState({
-    en: null,
-    pl: null,
-    fr: null,
-    nl: null
-  });
+  const [translationPromises, setTranslationPromises] = useState({});
+  const [newCategoryTitlesToAdd, setNewCategoryTitlesToAdd] = useState([]);
   const [addButtonClicked, setAddButtonClicked] = useState(false);
   const [buyModeItem, setBuyModeItem] = useState(false);
   const [addCategoryInputText, setAddCategoryInputText] = useState("");
@@ -117,14 +107,14 @@ function ListRoute({
     .flat(Infinity)
     .filter(supportedLanguage => supportedLanguage !== language);
   useFetchAddCategoryTranslationPromises(
-    addCategoryConfirmed,
-    addCategoryInputText,
     language,
+    isOnLine,
     translateLanguages,
     translationPromises,
-    isOnLine,
-    setTranslationPromises,
     setAddButtonClicked,
+    addCategoryInputText,
+    addCategoryConfirmed,
+    setTranslationPromises,
     setAddCategoryInputText,
     setAddCategoryConfirmed
   );
@@ -184,14 +174,14 @@ function ListRoute({
 }
 
 function useFetchAddCategoryTranslationPromises(
-  addCategoryConfirmed,
-  addCategoryInputText,
   language,
+  isOnLine,
   translateLanguages,
   translationPromises,
-  isOnLine,
-  setTranslationPromises,
   setAddButtonClicked,
+  addCategoryInputText,
+  addCategoryConfirmed,
+  setTranslationPromises,
   setAddCategoryInputText,
   setAddCategoryConfirmed
 ) {
@@ -213,7 +203,7 @@ function useFetchAddCategoryTranslationPromises(
         Object.values(translationPromises).join("")
       ) {
         setTranslationPromises({
-          [language]: addCategoryInputText,
+          [language]: new Promise(resolve => resolve(addCategoryInputText)),
           ...__translationPromises__
         });
       }
