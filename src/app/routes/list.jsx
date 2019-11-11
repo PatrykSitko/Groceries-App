@@ -74,7 +74,10 @@ const mapDispatchToProps = dispatch => ({
     dispatch(
       setFoodCategories({
         state,
-        foodCategories: { title: titles, key: newCategoryKey }
+        foodCategories: [
+          ...state.food.categories,
+          { title: titles, key: newCategoryKey }
+        ]
       })
     );
   }
@@ -117,7 +120,22 @@ function ListRoute({
     newCategoryTitlesToAdd,
     setNewCategoryTitlesToAdd
   );
-  console.log(newCategoryTitlesToAdd);
+  useEffect(() => {
+    if (newCategoryTitlesToAdd.length === supportedLanguages.length) {
+      const titles = {};
+      newCategoryTitlesToAdd.forEach(
+        ({ language, translation }) => (titles[language] = translation)
+      );
+      addFoodCategory(state, titles);
+      setNewCategoryTitlesToAdd([]);
+    }
+  }, [
+    newCategoryTitlesToAdd,
+    setNewCategoryTitlesToAdd,
+    supportedLanguages,
+    addFoodCategory,
+    state
+  ]);
   return (
     <section
       {...{
