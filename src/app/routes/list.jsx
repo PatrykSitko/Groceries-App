@@ -149,9 +149,12 @@ function ListRoute({
         initiallySelectedCategoryKey={selectedCategoryKey}
         getSelectedCategoryKey={key => setSelectedCategoryKey(state, key)}
       >
-        {[categories].flat(Infinity).map(({ key, title }) => (
-          <Category {...{ key, id: key, title: title[language] }} />
-        ))}
+        {[categories]
+          .flat(Infinity)
+          .sort()
+          .map(({ key, title }) => (
+            <Category {...{ key, id: key, title: title[language] }} />
+          ))}
       </List>
       <PopupScreen
         {...{
@@ -165,7 +168,7 @@ function ListRoute({
         />
       </PopupScreen>
       <ProductsList>
-        {currentProducts.map(({ selected, title }) => (
+        {currentProducts.sort().map(({ selected, title }) => (
           <Product
             key={Object.values(title).join("")}
             title={title[language]}
