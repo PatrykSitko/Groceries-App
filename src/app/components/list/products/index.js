@@ -7,6 +7,8 @@ import NewProduct from "./new/product";
 export { default as Product } from "./product";
 export { default as Popup } from "./purchase/popup";
 
+const VARIABLE = 0;
+
 const mapStateToProps = ({
   state: {
     user: { language }
@@ -33,13 +35,25 @@ const togglePurchasedDescriptor = {
   nl: "Gekocht"
 };
 
-function ProductsList({ language, children: products, ...other }) {
+function ProductsList({
+  useNewProductNameState,
+  useConfirmAddNewProductState,
+  useAllowedToHideAddNewProductState,
+  language,
+  children: products,
+  ...other
+}) {
   delete other.dispatch;
   const [toggleSelected, setToggleSelected] = useState(false);
   const [togglePurchased, setTogglePurchased] = useState(false);
-  const [newProductName, setNewProductName] = useState("");
+  const [newProductName, setNewProductName] = useNewProductNameState;
   const [hideAddNewProduct, setHideAddNewProduct] = useState(false);
-  const [confirmAddNewProduct, setConfirmAddNewProduct] = useState(false);
+  const [
+    confirmAddNewProduct,
+    setConfirmAddNewProduct
+  ] = useConfirmAddNewProductState;
+  const allowedToHideAddNewProduct =
+    useAllowedToHideAddNewProductState[VARIABLE];
   const selectableProducts = [products]
     .flat(Infinity)
     .filter(({ props: { isSelected } }) => !isSelected);
@@ -48,7 +62,11 @@ function ProductsList({ language, children: products, ...other }) {
     .filter(({ props: { isSelected } }) => isSelected);
   const purchasedProducts = [];
   useEffect(() => {
-    if (hideAddNewProduct && confirmAddNewProduct) {
+    if (
+      hideAddNewProduct &&
+      confirmAddNewProduct &&
+      allowedToHideAddNewProduct
+    ) {
       setHideAddNewProduct(false);
       setConfirmAddNewProduct(false);
     }
@@ -56,13 +74,14 @@ function ProductsList({ language, children: products, ...other }) {
     hideAddNewProduct,
     setHideAddNewProduct,
     confirmAddNewProduct,
-    setConfirmAddNewProduct
+    setConfirmAddNewProduct,
+    allowedToHideAddNewProduct
   ]);
   return (
     <section className={`product-list`} {...other}>
       <div
         className="add-product"
-        onClick={() => setHideAddNewProduct(!hideAddNewProduct)}
+        onClick={() => setHideAddNewProduct(true)}
         hidden={hideAddNewProduct}
       >
         {addItemDescriptor[language]}
