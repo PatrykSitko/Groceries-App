@@ -5,11 +5,11 @@
 .new-product-input-field {
   @extend .input-field;
   @extend .add-product;
-  width: 82% !important;
+  width: 95% !important;
   padding-top: 2vmin !important;
   padding-bottom: 2vmin;
   font-size: 5.5vmin !important;
-  margin-left: 3.55vmin;
+  margin-left: 0;
   margin-right: 0;
 }
 .new-product-confirm-button {
@@ -21,4 +21,5 @@
   border-left: 0px solid black;
   height: 13.3vmin;
   width: 12.8vmin;
+  cursor: pointer;
 }
