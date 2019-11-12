@@ -70,7 +70,7 @@
       "nl": "Welkom"
     },
     "user": {
-      "name": "Drawbotics",
+      "name": null,
       "language": "en",
       "coleagues": ["Robert", "Marta"]
     },
