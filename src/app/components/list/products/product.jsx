@@ -77,7 +77,7 @@ function Product({
       }}
       {...other}
     >
-      {product}
+      <div className="product-title">{product}</div>
       <div className="separator" />
       {!deleteMode ? (
         <Checkbox useState={[checked, setChecked]} />

@@ -4,6 +4,9 @@
   margin: 0 10vmin;
   width: calc(100% - 20vmin);
   .product {
+    .product-title {
+      min-width: max-content;
+    }
     opacity: 1;
     display: flex;
     margin-top: 3.3vmin;
