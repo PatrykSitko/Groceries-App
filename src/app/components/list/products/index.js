@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./products.scss";
 import { connect } from "react-redux";
 import ToggleButton from "../../button/toggle";
+import NewProduct from "./new/product";
 
 export { default as Product } from "./product";
 export { default as Popup } from "./purchase/popup";
@@ -36,6 +37,9 @@ function ProductsList({ language, children: products, ...other }) {
   delete other.dispatch;
   const [toggleSelected, setToggleSelected] = useState(false);
   const [togglePurchased, setTogglePurchased] = useState(false);
+  const [newProductName, setNewProductName] = useState("");
+  const [hideAddNewProduct, setHideAddNewProduct] = useState(false);
+  const [confirmAddNewProduct, setConfirmAddNewProduct] = useState(false);
   const selectableProducts = [products]
     .flat(Infinity)
     .filter(({ props: { isSelected } }) => !isSelected);
@@ -43,9 +47,34 @@ function ProductsList({ language, children: products, ...other }) {
     .flat(Infinity)
     .filter(({ props: { isSelected } }) => isSelected);
   const purchasedProducts = [];
+  useEffect(() => {
+    if (hideAddNewProduct && confirmAddNewProduct) {
+      setHideAddNewProduct(false);
+      setConfirmAddNewProduct(false);
+    }
+  }, [
+    hideAddNewProduct,
+    setHideAddNewProduct,
+    confirmAddNewProduct,
+    setConfirmAddNewProduct
+  ]);
   return (
     <section className={`product-list`} {...other}>
-      <div className="add-product">{addItemDescriptor[language]}</div>
+      <div
+        className="add-product"
+        onClick={() => setHideAddNewProduct(!hideAddNewProduct)}
+        hidden={hideAddNewProduct}
+      >
+        {addItemDescriptor[language]}
+      </div>
+      <NewProduct
+        useProductNameState={[newProductName, setNewProductName]}
+        useConfirmNewProductState={[
+          confirmAddNewProduct,
+          setConfirmAddNewProduct
+        ]}
+        hidden={!hideAddNewProduct}
+      />
       {selectableProducts.length > 0 ? (
         <div className="selectable-products">{selectableProducts}</div>
       ) : (
