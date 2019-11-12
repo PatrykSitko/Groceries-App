@@ -1,12 +1,20 @@
 import React, { useRef } from "react";
 import "./field.scss";
 
-function InputField({ filterKeys, useState: inputState, ...other }) {
+function InputField({
+  classNamePrefix,
+  className,
+  filterKeys,
+  useState: inputState,
+  ...other
+}) {
   const [inputText, setInputText] = inputState;
   return (
     <input
       ref={useRef()}
-      className="input-field"
+      className={`${classNamePrefix ? `${classNamePrefix}-` : ""}input-field${
+        className ? ` ${className}` : ""
+      }`}
       type="text"
       name="input-field"
       onChange={e =>

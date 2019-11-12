@@ -3,6 +3,7 @@ import "./confirm.scss";
 
 function ConfirmButton({
   useState: useConfirmedState,
+  classNamePrefix,
   className,
   onClick,
   ...other
@@ -10,7 +11,9 @@ function ConfirmButton({
   const [confirmed, setConfirmed] = useConfirmedState;
   return (
     <div
-      className={`confirm-button${className ? ` ${className}` : ""}`}
+      className={`${
+        classNamePrefix ? `${classNamePrefix}-` : ""
+      }confirm-button${className ? ` ${className}` : ""}`}
       onClick={event => {
         if (typeof onClick === "function") {
           onClick(event, { confirmed: !confirmed });
