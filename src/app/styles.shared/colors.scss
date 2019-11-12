@@ -17,7 +17,7 @@ $languageButtonHoverBackgroundColor: #f4f2ea;
 $languageButtonBorderColor: #d3d3d3;
 $languageButtonSelectedColor: $languageButtonColor;
 $languageButtonSelectedBackgroundColor: black;
-$languageButtonSelectedHoverColor: $languageButtonColor + 99;
+$languageButtonSelectedHoverColor: transparentize($languageButtonColor, 0.153);
 $languageButtonSelectedHoverBackgroundColor: $languageButtonBackgroundColor;
 $languageButtonSectionColor: $languageButtonSelectedHoverColor;
 $languageButtonSectionBackgroundColor: $languageButtonSelectedHoverBackgroundColor;
