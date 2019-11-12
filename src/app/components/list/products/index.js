@@ -7,8 +7,6 @@ import NewProduct from "./new/product";
 export { default as Product } from "./product";
 export { default as Popup } from "./purchase/popup";
 
-const VARIABLE = 0;
-
 const mapStateToProps = ({
   state: {
     user: { language }
@@ -36,7 +34,7 @@ const togglePurchasedDescriptor = {
 };
 
 function ProductsList({
-  useNewProductNameState,
+  useNewProductNameInputTextState,
   useConfirmAddNewProductState,
   useAllowedToHideAddNewProductState,
   language,
@@ -46,14 +44,16 @@ function ProductsList({
   delete other.dispatch;
   const [toggleSelected, setToggleSelected] = useState(false);
   const [togglePurchased, setTogglePurchased] = useState(false);
-  const [newProductName, setNewProductName] = useNewProductNameState;
+  const [newProductName, setNewProductName] = useNewProductNameInputTextState;
   const [hideAddNewProduct, setHideAddNewProduct] = useState(false);
   const [
     confirmAddNewProduct,
     setConfirmAddNewProduct
   ] = useConfirmAddNewProductState;
-  const allowedToHideAddNewProduct =
-    useAllowedToHideAddNewProductState[VARIABLE];
+  const [
+    allowedToHideAddNewProduct,
+    setAllowedToHideAddNewProduct
+  ] = useAllowedToHideAddNewProductState;
   const selectableProducts = [products]
     .flat(Infinity)
     .filter(({ props: { isSelected } }) => !isSelected);
@@ -69,13 +69,15 @@ function ProductsList({
     ) {
       setHideAddNewProduct(false);
       setConfirmAddNewProduct(false);
+      setAllowedToHideAddNewProduct(false);
     }
   }, [
     hideAddNewProduct,
     setHideAddNewProduct,
     confirmAddNewProduct,
     setConfirmAddNewProduct,
-    allowedToHideAddNewProduct
+    allowedToHideAddNewProduct,
+    setAllowedToHideAddNewProduct
   ]);
   return (
     <section className={`product-list`} {...other}>
