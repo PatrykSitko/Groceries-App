@@ -5,7 +5,19 @@
   padding: 0;
   font-family: "Ubuntu", sans-serif;
   user-select: none;
+  scrollbar-color: aliceblue #d8d8d8;
+  scrollbar-width: thin;
   // fix for overflowing padding:
   padding-top: 1px;
   margin-top: -1px;
+}
+*::-webkit-scrollbar {
+  width: 1vmin;
+  border-top-right-radius: 3vmin;
+  border-bottom-right-radius: 3vmin;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: #d8d8d8;
+  border: 1.5px solid aliceblue;
+  border-radius: 3vmin;
 }
