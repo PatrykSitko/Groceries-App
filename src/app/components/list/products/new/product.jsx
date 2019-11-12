@@ -18,6 +18,7 @@ function NewProduct({
         {...{ filterKeys, hidden, ...other }}
       />
       <ConfirmButton
+        onlySetConfirmTrueAllowed={true}
         classNamePrefix="new-product"
         useState={useConfirmNewProductState}
         {...{ hidden }}
