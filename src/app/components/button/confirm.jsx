@@ -2,6 +2,7 @@ import React from "react";
 import "./confirm.scss";
 
 function ConfirmButton({
+  onlySetConfirmTrueAllowed = false,
   useState: useConfirmedState,
   classNamePrefix,
   className,
@@ -18,7 +19,7 @@ function ConfirmButton({
         if (typeof onClick === "function") {
           onClick(event, { confirmed: !confirmed });
         }
-        setConfirmed(!confirmed);
+        setConfirmed(onlySetConfirmTrueAllowed ? true : !confirmed);
       }}
       {...other}
     />
