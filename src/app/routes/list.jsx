@@ -185,24 +185,14 @@ function ListRoute({
     setNewProductNameInputText,
     setAllowedToHideAddNewProductState
   );
-  useEffect(() => {
-    if (newProductTitlesToAdd.length === supportedLanguages.length) {
-      const titles = {};
-      newProductTitlesToAdd.forEach(
-        ({ language, translation }) => (titles[language] = translation)
-      );
-      console.log(titles);
-      addFoodEntry(state, titles, language);
-      setNewProductTitlesToAdd([]);
-    }
-  }, [
+  useAddFoodEntry(
     addFoodEntry,
     language,
     newProductTitlesToAdd,
     state,
-    supportedLanguages
-  ]);
-  console.log(newProductTitlesToAdd);
+    supportedLanguages,
+    setNewProductTitlesToAdd
+  );
   return (
     <section
       {...{
@@ -379,6 +369,32 @@ function useFetchAddProductTranslationPromises(
   ]);
 }
 
+function useAddFoodEntry(
+  addFoodEntry,
+  language,
+  newProductTitlesToAdd,
+  state,
+  supportedLanguages,
+  setNewProductTitlesToAdd
+) {
+  useEffect(() => {
+    if (newProductTitlesToAdd.length === supportedLanguages.length) {
+      const titles = {};
+      newProductTitlesToAdd.forEach(
+        ({ language, translation }) => (titles[language] = translation)
+      );
+      addFoodEntry(state, titles, language);
+      setNewProductTitlesToAdd([]);
+    }
+  }, [
+    addFoodEntry,
+    language,
+    newProductTitlesToAdd,
+    state,
+    supportedLanguages,
+    setNewProductTitlesToAdd
+  ]);
+}
 export default connect(
   mapStateToProps,
   mapDispatchToProps
