@@ -50,6 +50,47 @@ const mapDispatchToProps = dispatch => ({
         isSelected
       })
     ),
+  addFoodEntry: (state, productTitles, language) => {
+    const currentFoodEntries = state.food.entries;
+    const currentCategoryKey = state.food["selected-category-key"];
+    const foodEntryExists = currentFoodEntries.filter(
+      ({ title }) => title[language] === productTitles[language]
+    );
+    if (foodEntryExists.length > 0) {
+      if (foodEntryExists[0].categoryKeys.includes(currentCategoryKey)) {
+        return;
+      } else {
+        dispatch(
+          setFoodEntries({
+            state,
+            foodEntries: [currentFoodEntries].flat(Infinity).map(foodEntry => {
+              if (foodEntry.title[language] === productTitles[language]) {
+                foodEntry.categoryKeys.push(currentCategoryKey);
+                return foodEntry;
+              } else {
+                return foodEntry;
+              }
+            })
+          })
+        );
+      }
+    } else {
+      dispatch(
+        setFoodEntries({
+          state,
+          foodEntries: [currentFoodEntries].flat(Infinity).concat({
+            categoryKeys: ["global", currentCategoryKey],
+            selected: false,
+            purchased: {
+              price: null,
+              who: null
+            },
+            title: productTitles
+          })
+        })
+      );
+    }
+  },
   deleteFoodEntry: (state, productTitle, language) => {
     const currentFoodEntries = state.food.entries;
     dispatch(
@@ -95,16 +136,24 @@ function ListRoute({
   windowInnerDimensions,
   supportedLanguages,
   deleteFoodEntry,
-  addFoodCategory
+  addFoodCategory,
+  addFoodEntry
 }) {
   const currentProducts = [products]
     .flat(Infinity)
     .filter(({ categoryKeys }) => categoryKeys.includes(selectedCategoryKey));
   const [newCategoryTitlesToAdd, setNewCategoryTitlesToAdd] = useState([]);
+  const [newProductTitlesToAdd, setNewProductTitlesToAdd] = useState([]);
   const [addButtonClicked, setAddButtonClicked] = useState(false);
   const [buyModeItem, setBuyModeItem] = useState(false);
   const [addCategoryInputText, setAddCategoryInputText] = useState("");
   const [addCategoryConfirmed, setAddCategoryConfirmed] = useState(false);
+  const [newProductNameInputText, setNewProductNameInputText] = useState("");
+  const [confirmAddNewProduct, setConfirmAddNewProduct] = useState(false);
+  const [
+    allowedToHideAddNewProductState,
+    setAllowedToHideAddNewProductState
+  ] = useState(false);
   const translateLanguages = [supportedLanguages]
     .flat(Infinity)
     .filter(supportedLanguage => supportedLanguage !== language);
@@ -117,25 +166,43 @@ function ListRoute({
     addCategoryConfirmed,
     setAddCategoryInputText,
     setAddCategoryConfirmed,
-    newCategoryTitlesToAdd,
     setNewCategoryTitlesToAdd
   );
-  useEffect(() => {
-    if (newCategoryTitlesToAdd.length === supportedLanguages.length) {
-      const titles = {};
-      newCategoryTitlesToAdd.forEach(
-        ({ language, translation }) => (titles[language] = translation)
-      );
-      addFoodCategory(state, titles);
-      setNewCategoryTitlesToAdd([]);
-    }
-  }, [
+  useAddFoodCategory(
     newCategoryTitlesToAdd,
     setNewCategoryTitlesToAdd,
     supportedLanguages,
     addFoodCategory,
     state
+  );
+  useFetchAddProductTranslationPromises(
+    confirmAddNewProduct,
+    isOnLine,
+    language,
+    newProductNameInputText,
+    translateLanguages,
+    setNewProductTitlesToAdd,
+    setNewProductNameInputText,
+    setAllowedToHideAddNewProductState
+  );
+  useEffect(() => {
+    if (newProductTitlesToAdd.length === supportedLanguages.length) {
+      const titles = {};
+      newProductTitlesToAdd.forEach(
+        ({ language, translation }) => (titles[language] = translation)
+      );
+      console.log(titles);
+      addFoodEntry(state, titles, language);
+      setNewProductTitlesToAdd([]);
+    }
+  }, [
+    addFoodEntry,
+    language,
+    newProductTitlesToAdd,
+    state,
+    supportedLanguages
   ]);
+  console.log(newProductTitlesToAdd);
   return (
     <section
       {...{
@@ -167,7 +234,20 @@ function ListRoute({
           useConfirmedState={[addCategoryConfirmed, setAddCategoryConfirmed]}
         />
       </PopupScreen>
-      <ProductsList>
+      <ProductsList
+        useNewProductNameInputTextState={[
+          newProductNameInputText,
+          setNewProductNameInputText
+        ]}
+        useConfirmAddNewProductState={[
+          confirmAddNewProduct,
+          setConfirmAddNewProduct
+        ]}
+        useAllowedToHideAddNewProductState={[
+          allowedToHideAddNewProductState,
+          setAllowedToHideAddNewProductState
+        ]}
+      >
         {currentProducts.sort().map(({ selected, title }) => (
           <Product
             key={Object.values(title).join("")}
@@ -192,7 +272,6 @@ function ListRoute({
     </section>
   );
 }
-
 function useFetchAddCategoryTranslationPromises(
   language,
   isOnLine,
@@ -202,7 +281,6 @@ function useFetchAddCategoryTranslationPromises(
   addCategoryConfirmed,
   setAddCategoryInputText,
   setAddCategoryConfirmed,
-  newCategoryTitlesToAdd,
   setNewCategoryTitlesToAdd
 ) {
   useEffect(() => {
@@ -230,10 +308,77 @@ function useFetchAddCategoryTranslationPromises(
     language,
     translateLanguages,
     isOnLine,
-    newCategoryTitlesToAdd,
     setNewCategoryTitlesToAdd
   ]);
 }
+
+function useAddFoodCategory(
+  newCategoryTitlesToAdd,
+  setNewCategoryTitlesToAdd,
+  supportedLanguages,
+  addFoodCategory,
+  state
+) {
+  useEffect(() => {
+    if (newCategoryTitlesToAdd.length === supportedLanguages.length) {
+      const titles = {};
+      newCategoryTitlesToAdd.forEach(
+        ({ language, translation }) => (titles[language] = translation)
+      );
+      addFoodCategory(state, titles);
+      setNewCategoryTitlesToAdd([]);
+    }
+  }, [
+    newCategoryTitlesToAdd,
+    setNewCategoryTitlesToAdd,
+    supportedLanguages,
+    addFoodCategory,
+    state
+  ]);
+}
+function useFetchAddProductTranslationPromises(
+  confirmAddNewProduct,
+  isOnLine,
+  language,
+  newProductNameInputText,
+  translateLanguages,
+  setNewProductTitlesToAdd,
+  setNewProductNameInputText,
+  setAllowedToHideAddNewProductState
+) {
+  useEffect(() => {
+    if (
+      confirmAddNewProduct &&
+      isOnLine &&
+      newProductNameInputText.length > 0
+    ) {
+      const translations = [];
+      translateLanguages.forEach(translateLanguage =>
+        translateLanguage !== language
+          ? translate(
+              language,
+              translateLanguage,
+              newProductNameInputText
+            ).then(translation => translations.push(translation))
+          : ""
+      );
+      translations.push({ language, translation: newProductNameInputText });
+      setNewProductTitlesToAdd(translations);
+      setNewProductNameInputText("");
+      setAllowedToHideAddNewProductState(true);
+    }
+  }, [
+    confirmAddNewProduct,
+    isOnLine,
+    language,
+    newProductNameInputText,
+    translateLanguages,
+    setNewProductTitlesToAdd,
+    setNewProductNameInputText,
+    setAllowedToHideAddNewProductState
+  ]);
+}
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
