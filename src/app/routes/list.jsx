@@ -154,6 +154,7 @@ function ListRoute({
     allowedToHideAddNewProductState,
     setAllowedToHideAddNewProductState
   ] = useState(false);
+  const [purchasePriceText, setPurchasePriceText] = useState("");
   const translateLanguages = [supportedLanguages]
     .flat(Infinity)
     .filter(supportedLanguage => supportedLanguage !== language);
@@ -257,7 +258,11 @@ function ListRoute({
           useState: [buyModeItem, setBuyModeItem]
         }}
       >
-        <ProductPopup product={buyModeItem} {...{ language }} />
+        <ProductPopup
+          usePriceState={[purchasePriceText, setPurchasePriceText]}
+          product={buyModeItem}
+          {...{ language }}
+        />
       </PopupScreen>
     </section>
   );
@@ -278,9 +283,11 @@ function useFetchAddCategoryTranslationPromises(
       const translations = [];
       translateLanguages.forEach(translateLanguage =>
         translateLanguage !== language
-          ? translate(language, translateLanguage, addCategoryInputText).then(
-              translation => translations.push(translation)
-            )
+          ? translate(
+              language,
+              translateLanguage,
+              addCategoryInputText
+            ).then(translation => translations.push(translation))
           : ""
       );
       translations.push({ language, translation: addCategoryInputText });
@@ -395,7 +402,4 @@ function useAddFoodEntry(
     setNewProductTitlesToAdd
   ]);
 }
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ListRoute);
+export default connect(mapStateToProps, mapDispatchToProps)(ListRoute);
