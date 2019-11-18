@@ -4,6 +4,7 @@ import "./field.scss";
 function InputField({
   classNamePrefix,
   className,
+  allowKeys,
   filterKeys,
   useState: inputState,
   ...other
@@ -21,7 +22,11 @@ function InputField({
         setInputText(
           e.target.value
             .split("")
-            .filter(key => ![filterKeys].flat(Infinity).includes(key))
+            .filter(
+              key =>
+                [allowKeys].flat(Infinity).includes(key) ||
+                (filterKeys && ![filterKeys].flat(Infinity).includes(key))
+            )
             .join("")
         )
       }
