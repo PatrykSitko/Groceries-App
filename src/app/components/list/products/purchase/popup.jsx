@@ -1,9 +1,8 @@
-import React, { useState /*useEffect*/ } from "react";
+import React, { useState, useEffect } from "react";
 import InputField from "../../../input/field";
 import { connect } from "react-redux";
 import List, { Category } from "../../../list";
 import ConfirmButton from "../../../button/confirm";
-// import { getElementRef, getElementRect } from "../../../tools/element";
 import "./popup.scss";
 
 const priceDescriptor = {
@@ -28,47 +27,46 @@ function PurchasePopup({ state, language, product, usePriceState, ...others }) {
   const {
     user: { coleagues }
   } = state;
-  // const [popupStyle, setPopupStyle] = useState({ marginTop: 0 });
-  const [inputText, setInputText] = useState("");
+  const [priceText, setPriceText] = usePriceState;
+  const [priceTextSepatatorIndex, setPriceSeparatorIndex] = useState(undefined);
   const [currentlySelectedColeague, setCurrentlySelectedColeague] = useState(
     coleagues[0]
   );
   const [confirmed, setConfirmed] = useState(false);
-  // useEffect(() => {
-  //   let newInputText = inputText;
-  //   newInputText = newInputText
-  //     .split("")
-  //     .filter(number => typeof number === "number")
-  //     .join("");
-  //   if (newInputText.split("")[0] !== "$") {
-  //     newInputText = "$".concat(inputText);
-  //   }
-  //   if (inputText !== newInputText) {
-  //     setInputText(newInputText);
-  //   }
-  // }, [inputText, setInputText]);
-  // useEffect(() => {
-  //   const popupRef = getElementRef(document.getElementById("popup"));
-  //   const popupContainerRef = getElementRef(
-  //     document.getElementById("popup-background")
-  //   );
-  //   const popupRect = getElementRect(popupRef);
-  //   const popupContainerRect = getElementRect(popupContainerRef);
-  //   if (!popupRect || !popupContainerRect) {
-  //     return;
-  //   }
-  //   const { height: popupHeight } = popupRect;
-  //   const { height: popupContainerHeight } = popupContainerRect;
-  //   const newMarginTop = (popupContainerHeight - popupHeight) / 2;
-  //   if (popupStyle.marginTop !== newMarginTop) {
-  //     setPopupStyle({ marginTop: newMarginTop });
-  //   }
-  // }, [popupStyle, setPopupStyle]);
+  useEffect(() => {
+    if (priceText.split("")[0] !== "$") {
+      setPriceText("$".concat(priceText));
+    }
+    if (!priceTextSepatatorIndex && priceText.indexOf(",") >= 0) {
+      setPriceSeparatorIndex(priceText.indexOf(","));
+    }
+    if (priceText.indexOf(",") !== priceText.lastIndexOf(",")) {
+      let index = undefined;
+      if (priceTextSepatatorIndex <= priceText.indexOf(",")) {
+        index = priceText.indexOf(",");
+        setPriceSeparatorIndex(priceText.lastIndexOf(","));
+      } else {
+        index = priceText.lastIndexOf(",");
+        setPriceSeparatorIndex(priceText.indexOf(","));
+      }
+      setPriceText(
+        `${priceText.slice(0, index)}${priceText.slice(
+          index + 1,
+          priceText.length
+        )}`
+      );
+    } else if (priceText.indexOf(",") === 0) {
+      setPriceText("0".concat(priceText));
+    }
+  }, [priceText, setPriceText, priceTextSepatatorIndex]);
   return (
-    <div id="popup" className="purchase" /*style={popupStyle}*/ {...others}>
+    <div id="popup" className="purchase" {...others}>
       <div className="descriptor">{product}</div>
       <div className="price">{priceDescriptor[language]}</div>
-      <InputField useState={[inputText, setInputText]} />
+      <InputField
+        allowKeys={["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ","]}
+        useState={[priceText, setPriceText]}
+      />
       <div className="who">{personDescriptor[language]}</div>
       <List
         hideAddClick={true}
