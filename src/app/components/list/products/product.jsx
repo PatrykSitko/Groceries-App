@@ -58,7 +58,7 @@ function Product({
           !event.target.className.includes("checkbox") &&
           !event.target.className.includes("delete")
         ) {
-          if (isSelected) {
+          if (isSelected && (!isPurchased || !isPurchased.who)) {
             setBuyMode(product);
           } else if (!isPurchased || !isPurchased.who) {
             setDeleteMode(!deleteMode);
