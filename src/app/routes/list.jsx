@@ -233,6 +233,21 @@ function ListRoute({
     setConfirmPurchaseProduct,
     setWhoPurchasedFoodEntry
   );
+  useEffect(() => {
+    currentProducts.forEach(
+      ({ selected, title, purchased: { price, who } }) => {
+        if (!selected && (price || who)) {
+          setWhoPurchasedFoodEntry(
+            state,
+            language,
+            title[language],
+            null,
+            null
+          );
+        }
+      }
+    );
+  }, [state, language, currentProducts, setWhoPurchasedFoodEntry]);
   return (
     <section
       {...{
