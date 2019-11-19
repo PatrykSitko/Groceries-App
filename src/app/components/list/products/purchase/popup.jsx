@@ -5,6 +5,7 @@ import List, { Category } from "../../../list";
 import ConfirmButton from "../../../button/confirm";
 import "./popup.scss";
 
+const FUNCTION = 1;
 const priceDescriptor = {
   pl: "Cena",
   en: "Price",
@@ -22,17 +23,26 @@ const personDescriptor = {
 const mapStateToProps = ({ state }) => ({
   state
 });
-function PurchasePopup({ state, language, product, usePriceState, ...others }) {
+function PurchasePopup({
+  state,
+  language,
+  product,
+  useWhoPurchasedState,
+  usePriceState,
+  useConfirmPurchaseState,
+  ...others
+}) {
   delete others.dispatch;
   const {
     user: { coleagues }
   } = state;
   const [priceText, setPriceText] = usePriceState;
+  const setWhoPurchased = useWhoPurchasedState[FUNCTION];
   const [priceTextSepatatorIndex, setPriceSeparatorIndex] = useState(undefined);
   const [currentlySelectedColeague, setCurrentlySelectedColeague] = useState(
     coleagues[0]
   );
-  const [confirmed, setConfirmed] = useState(false);
+  const [confirmed, setConfirmed] = useConfirmPurchaseState;
   useEffect(() => {
     if (priceText.split("")[0] !== "$") {
       setPriceText("$".concat(priceText));
@@ -80,7 +90,11 @@ function PurchasePopup({ state, language, product, usePriceState, ...others }) {
           <Category {...{ key: coleague, id: coleague, title: coleague }} />
         ))}
       </List>
-      <ConfirmButton useState={[confirmed, setConfirmed]} />
+      <ConfirmButton
+        onlySetConfirmTrueAllowed={true}
+        onClick={() => setWhoPurchased(currentlySelectedColeague)}
+        useState={[confirmed, setConfirmed]}
+      />
     </div>
   );
 }
