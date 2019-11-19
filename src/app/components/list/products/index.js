@@ -57,10 +57,22 @@ function ProductsList({
   const selectableProducts = [products]
     .flat(Infinity)
     .filter(({ props: { isSelected } }) => !isSelected);
-  const selectedProducts = [products]
-    .flat(Infinity)
-    .filter(({ props: { isSelected } }) => isSelected);
-  const purchasedProducts = [];
+  const selectedProducts = [products].flat(Infinity).filter(
+    ({
+      props: {
+        isSelected,
+        isPurchased: { who, price }
+      }
+    }) => isSelected && !who && !price
+  );
+  const purchasedProducts = [products].flat(Infinity).filter(
+    ({
+      props: {
+        isSelected,
+        isPurchased: { who, price }
+      }
+    }) => isSelected && who && price
+  );
   useEffect(() => {
     if (
       hideAddNewProduct &&
