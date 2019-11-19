@@ -26,7 +26,7 @@ function InputField({
               key =>
                 (allowKeys && [allowKeys].flat(Infinity).includes(key)) ||
                 (filterKeys && ![filterKeys].flat(Infinity).includes(key)) ||
-                (!allowKeys && !filterKeys && true)
+                (!allowKeys && !filterKeys)
             )
             .join("")
         )
