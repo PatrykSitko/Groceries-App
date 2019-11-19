@@ -50,6 +50,29 @@ const mapDispatchToProps = dispatch => ({
         isSelected
       })
     ),
+  setWhoPurchasedFoodEntry: (state, language, productTitle, price, who) => {
+    const currentFoodEntries = state.food.entries;
+    const purchasedFoodEntry = currentFoodEntries.filter(
+      ({ title }) => title[language] === productTitle
+    )[0];
+    if (purchasedFoodEntry) {
+      const purchasedFoodEntryCopy = { ...purchasedFoodEntry };
+      purchasedFoodEntryCopy.purchased.price = price;
+      purchasedFoodEntryCopy.purchased.who = who;
+      dispatch(
+        setFoodEntries({
+          state,
+          foodEntries: [currentFoodEntries].flat(Infinity).map(foodEntry => {
+            if (foodEntry.title[language] === productTitle) {
+              return purchasedFoodEntryCopy;
+            } else {
+              return foodEntry;
+            }
+          })
+        })
+      );
+    }
+  },
   addFoodEntry: (state, productTitles, language) => {
     const currentFoodEntries = state.food.entries;
     const currentCategoryKey = state.food["selected-category-key"];
@@ -137,7 +160,8 @@ function ListRoute({
   supportedLanguages,
   deleteFoodEntry,
   addFoodCategory,
-  addFoodEntry
+  addFoodEntry,
+  setWhoPurchasedFoodEntry
 }) {
   const currentProducts = [products]
     .flat(Infinity)
@@ -150,11 +174,13 @@ function ListRoute({
   const [addCategoryConfirmed, setAddCategoryConfirmed] = useState(false);
   const [newProductNameInputText, setNewProductNameInputText] = useState("");
   const [confirmAddNewProduct, setConfirmAddNewProduct] = useState(false);
+  const [confirmPurchaseProduct, setConfirmPurchaseProduct] = useState(false);
   const [
     allowedToHideAddNewProductState,
     setAllowedToHideAddNewProductState
   ] = useState(false);
   const [purchasePriceText, setPurchasePriceText] = useState("");
+  const [whoPurchased, setWhoPurchased] = useState("");
   const translateLanguages = [supportedLanguages]
     .flat(Infinity)
     .filter(supportedLanguage => supportedLanguage !== language);
@@ -194,6 +220,41 @@ function ListRoute({
     supportedLanguages,
     setNewProductTitlesToAdd
   );
+  useEffect(() => {
+    if (
+      buyModeItem &&
+      whoPurchased &&
+      purchasePriceText.length > 1 &&
+      confirmPurchaseProduct
+    ) {
+      setWhoPurchasedFoodEntry(
+        state,
+        language,
+        buyModeItem,
+        purchasePriceText,
+        whoPurchased
+      );
+      setBuyModeItem(undefined);
+      setWhoPurchased(undefined);
+      setPurchasePriceText("");
+      setConfirmPurchaseProduct(false);
+    } else if (confirmPurchaseProduct) {
+      setConfirmPurchaseProduct(false);
+    }
+  }, [
+    state,
+    language,
+    buyModeItem,
+    whoPurchased,
+    purchasePriceText,
+    confirmPurchaseProduct,
+    setBuyModeItem,
+    setWhoPurchased,
+    setPurchasePriceText,
+    setConfirmPurchaseProduct,
+    setWhoPurchasedFoodEntry
+  ]);
+  console.log(state);
   return (
     <section
       {...{
@@ -259,7 +320,12 @@ function ListRoute({
         }}
       >
         <ProductPopup
+          useWhoPurchasedState={[whoPurchased, setWhoPurchased]}
           usePriceState={[purchasePriceText, setPurchasePriceText]}
+          useConfirmPurchaseState={[
+            confirmPurchaseProduct,
+            setConfirmPurchaseProduct
+          ]}
           product={buyModeItem}
           {...{ language }}
         />
