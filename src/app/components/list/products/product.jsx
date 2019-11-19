@@ -45,8 +45,10 @@ function Product({
   return (
     <div
       className={`product${
-        typeof effectClass === "string" ? ` ${effectClass}` : ""
-      }${typeof className === "string" ? ` ${className}` : ""}`}
+        isPurchased.who && isPurchased.price ? " purchased" : ""
+      }${typeof effectClass === "string" ? ` ${effectClass}` : ""}${
+        typeof className === "string" ? ` ${className}` : ""
+      }`}
       onClick={event => {
         if (typeof onClick === "function") {
           onClick(event, product);
