@@ -220,28 +220,7 @@ function ListRoute({
     supportedLanguages,
     setNewProductTitlesToAdd
   );
-  useEffect(() => {
-    if (
-      buyModeItem &&
-      whoPurchased &&
-      purchasePriceText.length > 1 &&
-      confirmPurchaseProduct
-    ) {
-      setWhoPurchasedFoodEntry(
-        state,
-        language,
-        buyModeItem,
-        purchasePriceText,
-        whoPurchased
-      );
-      setBuyModeItem(undefined);
-      setWhoPurchased(undefined);
-      setPurchasePriceText("");
-      setConfirmPurchaseProduct(false);
-    } else if (confirmPurchaseProduct) {
-      setConfirmPurchaseProduct(false);
-    }
-  }, [
+  useSetPurchasedFoodEntry(
     state,
     language,
     buyModeItem,
@@ -253,7 +232,7 @@ function ListRoute({
     setPurchasePriceText,
     setConfirmPurchaseProduct,
     setWhoPurchasedFoodEntry
-  ]);
+  );
   return (
     <section
       {...{
@@ -299,11 +278,12 @@ function ListRoute({
           setAllowedToHideAddNewProductState
         ]}
       >
-        {currentProducts.sort().map(({ selected, title }) => (
+        {currentProducts.sort().map(({ selected, title, purchased }) => (
           <Product
             key={Object.values(title).join("")}
             title={title[language]}
             isSelected={selected}
+            isPurchased={purchased}
             onSelect={isSelected =>
               setIsSelectedFoodEntry(state, title, isSelected)
             }
@@ -465,6 +445,54 @@ function useAddFoodEntry(
     state,
     supportedLanguages,
     setNewProductTitlesToAdd
+  ]);
+}
+function useSetPurchasedFoodEntry(
+  state,
+  language,
+  buyModeItem,
+  whoPurchased,
+  purchasePriceText,
+  confirmPurchaseProduct,
+  setBuyModeItem,
+  setWhoPurchased,
+  setPurchasePriceText,
+  setConfirmPurchaseProduct,
+  setWhoPurchasedFoodEntry
+) {
+  useEffect(() => {
+    if (
+      buyModeItem &&
+      whoPurchased &&
+      purchasePriceText.length > 1 &&
+      confirmPurchaseProduct
+    ) {
+      setWhoPurchasedFoodEntry(
+        state,
+        language,
+        buyModeItem,
+        purchasePriceText,
+        whoPurchased
+      );
+      setBuyModeItem(undefined);
+      setWhoPurchased(undefined);
+      setPurchasePriceText("");
+      setConfirmPurchaseProduct(false);
+    } else if (confirmPurchaseProduct) {
+      setConfirmPurchaseProduct(false);
+    }
+  }, [
+    state,
+    language,
+    buyModeItem,
+    whoPurchased,
+    purchasePriceText,
+    confirmPurchaseProduct,
+    setBuyModeItem,
+    setWhoPurchased,
+    setPurchasePriceText,
+    setConfirmPurchaseProduct,
+    setWhoPurchasedFoodEntry
   ]);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ListRoute);
