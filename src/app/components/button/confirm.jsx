@@ -17,7 +17,9 @@ function ConfirmButton({
       }confirm-button${className ? ` ${className}` : ""}`}
       onClick={event => {
         if (typeof onClick === "function") {
-          onClick(event, { confirmed: !confirmed });
+          onClick(event, {
+            confirmed: onlySetConfirmTrueAllowed ? true : !confirmed
+          });
         }
         setConfirmed(onlySetConfirmTrueAllowed ? true : !confirmed);
       }}
