@@ -27,6 +27,7 @@ function AddListCategory({
   return (
     <div className="add-category">
       <InputField
+        filterKeys={["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]}
         className="category-descriptor"
         useState={[inputText, setInputText]}
         {...{

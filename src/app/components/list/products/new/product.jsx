@@ -4,7 +4,6 @@ import ConfirmButton from "../../../button/confirm";
 import "./product.scss";
 
 function NewProduct({
-  filterKeys,
   useConfirmNewProductState,
   useProductNameState,
   hidden,
@@ -13,9 +12,10 @@ function NewProduct({
   return (
     <div style={{ display: "flex" }}>
       <InputField
+        filterKeys={["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]}
         classNamePrefix="new-product"
         useState={useProductNameState}
-        {...{ filterKeys, hidden, ...other }}
+        {...{ hidden, ...other }}
       />
       <ConfirmButton
         onlySetConfirmTrueAllowed={true}
