@@ -233,21 +233,12 @@ function ListRoute({
     setConfirmPurchaseProduct,
     setWhoPurchasedFoodEntry
   );
-  useEffect(() => {
-    currentProducts.forEach(
-      ({ selected, title, purchased: { price, who } }) => {
-        if (!selected && (price || who)) {
-          setWhoPurchasedFoodEntry(
-            state,
-            language,
-            title[language],
-            null,
-            null
-          );
-        }
-      }
-    );
-  }, [state, language, currentProducts, setWhoPurchasedFoodEntry]);
+  useUnsetPurchasedFoodEntry(
+    state,
+    language,
+    currentProducts,
+    setWhoPurchasedFoodEntry
+  );
   return (
     <section
       {...{
@@ -509,5 +500,27 @@ function useSetPurchasedFoodEntry(
     setConfirmPurchaseProduct,
     setWhoPurchasedFoodEntry
   ]);
+}
+function useUnsetPurchasedFoodEntry(
+  state,
+  language,
+  currentProducts,
+  setWhoPurchasedFoodEntry
+) {
+  useEffect(() => {
+    currentProducts.forEach(
+      ({ selected, title, purchased: { price, who } }) => {
+        if (!selected && (price || who)) {
+          setWhoPurchasedFoodEntry(
+            state,
+            language,
+            title[language],
+            null,
+            null
+          );
+        }
+      }
+    );
+  }, [state, language, currentProducts, setWhoPurchasedFoodEntry]);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ListRoute);
