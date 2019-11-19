@@ -24,8 +24,9 @@ function InputField({
             .split("")
             .filter(
               key =>
-                [allowKeys].flat(Infinity).includes(key) ||
-                (filterKeys && ![filterKeys].flat(Infinity).includes(key))
+                (allowKeys && [allowKeys].flat(Infinity).includes(key)) ||
+                (filterKeys && ![filterKeys].flat(Infinity).includes(key)) ||
+                true
             )
             .join("")
         )
