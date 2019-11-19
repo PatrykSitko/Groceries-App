@@ -254,7 +254,6 @@ function ListRoute({
     setConfirmPurchaseProduct,
     setWhoPurchasedFoodEntry
   ]);
-  console.log(state);
   return (
     <section
       {...{
